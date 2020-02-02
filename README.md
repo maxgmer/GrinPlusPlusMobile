@@ -1,2 +1,2 @@
-# GrinPlusPlusMobile
-A C++ Grin Node &amp; Wallet for Android and iOS.
+# Grin++ Mobile
+A Dart and C++ Grin Node &amp; Wallet for Android and iOS.
