@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grin_plus_plus/screens/auth/auth_screen.dart';
 import 'package:grin_plus_plus/screens/loading_screen.dart';
+import 'package:grin_plus_plus/screens/screen_state.dart';
 
 /// If a programmer opened a secure screen and user is not
 /// authorized, instead of entering the secure screen user will be
@@ -15,11 +16,11 @@ class AuthGateway extends StatefulWidget {
 }
 
 enum AuthResult {success, loading, beforeInput}
-class _AuthGatewayState extends State<AuthGateway> {
+class _AuthGatewayState extends GrinState<AuthGateway> {
   AuthResult _result = AuthResult.loading;
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen(BuildContext context) {
     _imagineLikeUserJustEnteredSmthToAuth();
     switch(_result) {
       case AuthResult.success: return widget.secureScreen;
@@ -36,4 +37,7 @@ class _AuthGatewayState extends State<AuthGateway> {
       }
     });
   }
+
+  @override
+  bool get isSecure => false;
 }

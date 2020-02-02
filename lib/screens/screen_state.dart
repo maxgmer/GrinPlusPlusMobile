@@ -8,7 +8,7 @@ abstract class GrinState<T extends StatefulWidget> extends State<T>
   
   @override
   Widget build(BuildContext context) {
-    if (!_authorized) {
+    if (!_authorized && isSecure) {
       return AuthGateway(buildScreen(context));
     } else {
       return buildScreen(context);
@@ -35,4 +35,6 @@ abstract class GrinState<T extends StatefulWidget> extends State<T>
   }
 
   Widget buildScreen(BuildContext context);
+
+  bool get isSecure;
 }

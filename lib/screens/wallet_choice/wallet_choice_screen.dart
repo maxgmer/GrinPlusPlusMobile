@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grin_plus_plus/screens/screen_state.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 
 /// Screen where you open your existing wallet,
@@ -9,7 +10,7 @@ class WalletChoiceScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _WalletChoiceScreenState();
 }
 
-class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
+class _WalletChoiceScreenState extends GrinState<WalletChoiceScreen> {
   WalletChoiceBloc _bloc;
 
   @override
@@ -19,7 +20,7 @@ class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget buildScreen(BuildContext context) {
     return Scaffold(
       body: Center(
         child: BlocBuilder<WalletChoiceBloc, WalletChoiceState>(
@@ -32,4 +33,7 @@ class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
       ),
     );
   }
+
+  @override
+  bool get isSecure => false;
 }
