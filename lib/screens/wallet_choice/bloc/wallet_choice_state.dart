@@ -1,21 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:grin_plus_plus/models/wallet.dart';
 
 class WalletChoiceState extends Equatable {
-  final int counter;
+  final List<Wallet> wallets;
 
   WalletChoiceState({
-    @required this.counter,
+    @required this.wallets,
   });
 
   factory WalletChoiceState.initial() {
-    return WalletChoiceState(counter: 0);
+    return WalletChoiceState(
+      wallets: [],
+    );
   }
 
-  WalletChoiceState copyWith({int counter}) {
-    return WalletChoiceState(counter: counter ?? this.counter);
+  WalletChoiceState copyWith({List<Wallet> wallets}) {
+    return WalletChoiceState(
+      wallets: wallets ?? this.wallets,
+    );
   }
 
   @override
-  List<Object> get props => [counter];
+  List<Object> get props => [wallets];
 }

@@ -22,6 +22,10 @@ dependencies:
 
   equatable: ^1.0.3
   flutter_bloc: ^3.2.0
+  flutter_svg: ^0.17.1
+  intl: ^0.16.1
+  json_annotation: ^3.0.0
+  simple_animations: ^1.3.6
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -30,6 +34,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^1.0.0
+  json_serializable: ^3.2.0
 
 
 # For information on the generic Dart part of this file, see the
@@ -42,6 +49,66 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/nunito/Nunito-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fonts/nunito/Nunito-Light.ttf
+          weight: 300
+        - asset: assets/fonts/nunito/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/nunito/Nunito-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/nunito/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/nunito/Nunito-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/nunito/Nunito-Black.ttf
+          weight: 900
+
+        - asset: assets/fonts/nunito/Nunito-ExtraLightItalic.ttf
+          weight: 200
+        - asset: assets/fonts/nunito/Nunito-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/nunito/Nunito-Italic.ttf
+          weight: 400
+        - asset: assets/fonts/nunito/Nunito-SemiBoldItalic.ttf
+          weight: 600
+        - asset: assets/fonts/nunito/Nunito-BoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/nunito/Nunito-ExtraBoldItalic.ttf
+          weight: 800
+        - asset: assets/fonts/nunito/Nunito-BlackItalic.ttf
+          weight: 900
+
+    - family: OpenSans
+      fonts:
+        - asset: assets/fonts/open_sans/OpenSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/open_sans/OpenSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/open_sans/OpenSans-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/open_sans/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/open_sans/OpenSans-ExtraBold.ttf
+          weight: 800
+
+        - asset: assets/fonts/open_sans/OpenSans-LightItalic.ttf
+          weight: 300
+        - asset: assets/fonts/open_sans/OpenSans-Italic.ttf
+          weight: 400
+        - asset: assets/fonts/open_sans/OpenSans-SemiBoldItalic.ttf
+          weight: 600
+        - asset: assets/fonts/open_sans/OpenSans-BoldItalic.ttf
+          weight: 700
+        - asset: assets/fonts/open_sans/OpenSans-ExtraBoldItalic.ttf
+          weight: 800
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

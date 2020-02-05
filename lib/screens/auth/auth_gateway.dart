@@ -21,21 +21,12 @@ class _AuthGatewayState extends GrinState<AuthGateway> {
 
   @override
   Widget buildScreen(BuildContext context) {
-    _imagineLikeUserJustEnteredSmthToAuth();
     switch(_result) {
       case AuthResult.success: return widget.secureScreen;
       case AuthResult.loading: return LoadingScreen();
       case AuthResult.beforeInput: return AuthScreen();
     }
     return AuthScreen();
-  }
-
-  void _imagineLikeUserJustEnteredSmthToAuth() {
-    Future.delayed(Duration(seconds: 3)).then((_) {
-      setState() {
-        _result = AuthResult.success;
-      }
-    });
   }
 
   @override

@@ -7,4 +7,4 @@ abstract class WalletChoiceEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadIncrementedCounter extends WalletChoiceEvent {}
+class CreateWallet extends WalletChoiceEvent {}

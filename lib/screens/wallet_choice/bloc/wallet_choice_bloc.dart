@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grin_plus_plus/native_api/native_api.dart';
+import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 
 class WalletChoiceBloc extends Bloc<WalletChoiceEvent, WalletChoiceState> {
@@ -9,8 +9,12 @@ class WalletChoiceBloc extends Bloc<WalletChoiceEvent, WalletChoiceState> {
 
   @override
   Stream<WalletChoiceState> mapEventToState(WalletChoiceEvent event) async* {
-    if (event is LoadIncrementedCounter) {
-      yield state.copyWith(counter: NativeApi.incrementAndLoadCounter());
+    if (event is CreateWallet) {
+      yield state.copyWith(
+        wallets: state.wallets..add(
+          Wallet(name: 'New wallet'),
+        ),
+      );
     }
   }
 }

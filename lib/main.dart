@@ -14,6 +14,8 @@ class GrinPlusPlus extends StatelessWidget {
     return MaterialApp(
       title: 'Grin++',
       theme: ThemeData(
+        fontFamily: 'Nunito',
+        primaryColor: Colors.black,
         accentColor: kColorAccentGrey,
         scaffoldBackgroundColor: kColorBackgroundGrey,
       ),
