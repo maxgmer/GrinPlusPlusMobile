@@ -7,13 +7,10 @@ class BottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: kColorBackgroundGreyLight,
-      elevation: 12,
-      shape: BeveledRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.elliptical(100, 20)),
-      ),
+      color: Colors.black.withOpacity(0.4),
+      elevation: 0,
       child: Container(
-        height: 60,
+        height: 50,
         child: Row(
           children: <Widget>[
             Container(width: MediaQuery.of(context).size.width * 0.2),

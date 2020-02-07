@@ -19,8 +19,12 @@ class GrinPlusPlus extends StatelessWidget {
         accentColor: kColorAccentGrey,
         scaffoldBackgroundColor: kColorBackgroundGrey,
       ),
-      home: BlocProvider(
-        create: (BuildContext context) => WalletChoiceBloc(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<WalletChoiceBloc>(
+            create: (BuildContext context) => WalletChoiceBloc(),
+          ),
+        ],
         child: WalletChoiceScreen(),
       ),
     );

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/strings.dart';
-import 'package:grin_plus_plus/widgets/fade_in.dart';
+import 'package:grin_plus_plus/widgets/fade_animator.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -11,9 +11,11 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          FadeIn(
+          FadeAnimator(
+            startOpacity: 0,
+            endOpacity: 1,
             duration: 1500,
-            delay: 2000,
+            delay: 1000,
             child: Text(
               '$kHelloString!',
                 textAlign: TextAlign.center,
@@ -27,9 +29,11 @@ class WelcomeScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 20),
             width: MediaQuery.of(context).size.width * 0.5,
-            child: FadeIn(
+            child: FadeAnimator(
+              startOpacity: 0,
+              endOpacity: 1,
               duration: 1500,
-              delay: 5000,
+              delay: 3000,
               child: Text(
                 '$kIntroString.',
                 textAlign: TextAlign.center,
