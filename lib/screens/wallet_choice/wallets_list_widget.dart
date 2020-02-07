@@ -27,6 +27,7 @@ class WalletsList extends StatelessWidget {
           itemBuilder: (context, index) {
             Wallet wallet = wallets[index];
             return Padding(
+              key: ValueKey(wallet.name),
               padding: const EdgeInsets.symmetric(vertical: 10),
               child: RaisedButton(
                 padding: const EdgeInsets.all(0),

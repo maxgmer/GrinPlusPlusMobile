@@ -7,6 +7,7 @@ abstract class AddWalletEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class ResetState extends AddWalletEvent {}
 class CreateWallet extends AddWalletEvent {
   final String walletName;
   final String password;

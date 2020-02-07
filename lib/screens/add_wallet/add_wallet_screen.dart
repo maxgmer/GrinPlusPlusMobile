@@ -14,11 +14,13 @@ class AddWalletScreen extends StatefulWidget {
 }
 
 class _AddWalletScreenState extends State<AddWalletScreen> {
+  AddWalletBloc _bloc;
   WalletChoiceBloc _walletChoiceBloc;
 
   @override
   void initState() {
     super.initState();
+    _bloc = BlocProvider.of<AddWalletBloc>(context);
     _walletChoiceBloc = BlocProvider.of<WalletChoiceBloc>(context);
   }
 
@@ -28,6 +30,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
       listener: (context, state) {
         if (state.newWallet != null) {
           _walletChoiceBloc.add(NewWallet(state.newWallet));
+          _bloc.add(ResetState());
         }
       },
       child: Container(

@@ -29,6 +29,9 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
         );
       }
     }
+    if (event is ResetState) {
+      yield AddWalletState.initial();
+    }
   }
 
   String _validateWalletName(String walletName) {
