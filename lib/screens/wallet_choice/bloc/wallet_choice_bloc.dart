@@ -14,5 +14,11 @@ class WalletChoiceBloc extends Bloc<WalletChoiceEvent, WalletChoiceState> {
     if (event is ReturnToMainScreen) {
       yield state.copyWith(addButtonPressed: false);
     }
+    if (event is NewWallet) {
+      yield state.copyWith(
+        wallets: state.wallets..add(event.wallet),
+        addButtonPressed: false,
+      );
+    }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
+import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/wallet_choice_screen.dart';
 
@@ -23,6 +24,9 @@ class GrinPlusPlus extends StatelessWidget {
         providers: [
           BlocProvider<WalletChoiceBloc>(
             create: (BuildContext context) => WalletChoiceBloc(),
+          ),
+          BlocProvider<AddWalletBloc>(
+            create: (BuildContext context) => AddWalletBloc(),
           ),
         ],
         child: WalletChoiceScreen(),

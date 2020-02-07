@@ -23,3 +23,5 @@ const String kPasswordString = 'Password';
 const String kCreateWalletString = 'Create new wallet';
 const String kRestoreWalletString = 'Restore my wallet instead';
 const String kSubmitWalletCreationString = 'Submit and create a wallet';
+const String kWalletNeedsNameString = 'Wallet name cannot be empty';
+const String kPasswordShortString = 'Password length should be at least 4 symbols';

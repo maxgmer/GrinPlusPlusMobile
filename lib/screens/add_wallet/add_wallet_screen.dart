@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/add_wallet/create_wallet_fields_block.dart';
+import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/fade_animator.dart';
+import 'bloc/bloc.dart';
 
 class AddWalletScreen extends StatefulWidget {
   @override
@@ -11,20 +14,32 @@ class AddWalletScreen extends StatefulWidget {
 }
 
 class _AddWalletScreenState extends State<AddWalletScreen> {
+  WalletChoiceBloc _walletChoiceBloc;
 
+  @override
+  void initState() {
+    super.initState();
+    _walletChoiceBloc = BlocProvider.of<WalletChoiceBloc>(context);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: BoxConstraints.expand(),
-      child: Center(
-        child: SingleChildScrollView(
-          child: FadeAnimator(
-            startOpacity: 0,
-            endOpacity: 1,
-            duration: 1500,
-            delay: 0,
-            child: Padding(
+    return BlocListener<AddWalletBloc, AddWalletState>(
+      listener: (context, state) {
+        if (state.newWallet != null) {
+          _walletChoiceBloc.add(NewWallet(state.newWallet));
+        }
+      },
+      child: Container(
+        constraints: BoxConstraints.expand(),
+        child: Center(
+          child: SingleChildScrollView(
+            child: FadeAnimator(
+              startOpacity: 0,
+              endOpacity: 1,
+              duration: 1500,
+              delay: 0,
+              child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -61,6 +76,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
                     ),
                   ],
                 ),
+              ),
             ),
           ),
         ),
