@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:grin_plus_plus/models/wallet.dart';
 
 abstract class AddWalletEvent extends Equatable {
   const AddWalletEvent();
@@ -11,9 +12,15 @@ class ResetState extends AddWalletEvent {}
 class CreateWallet extends AddWalletEvent {
   final String walletName;
   final String password;
+  final String repeatPassword;
+  final List<Wallet> existingWallets;
 
-  const CreateWallet(this.walletName, this.password);
+  const CreateWallet(
+      this.walletName,
+      this.password,
+      this.repeatPassword,
+      this.existingWallets);
 
   @override
-  List<Object> get props => [walletName, password];
+  List<Object> get props => [walletName, password, repeatPassword, existingWallets];
 }

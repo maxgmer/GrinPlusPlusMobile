@@ -14,8 +14,11 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
     if (event is CreateWallet) {
       String walletName = event.walletName;
       String password = event.password;
-      String nameError = _validateWalletName(walletName);
-      String passwordError = _validatePassword(password);
+      String repeatPassword = event.repeatPassword;
+
+      String nameError = _validateWalletName(walletName, event.existingWallets);
+      String passwordError = _validatePassword(password, repeatPassword);
+
       if (nameError == null && passwordError == null) {
         yield state.copyWith(
           walletNameError: null,
@@ -34,16 +37,24 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
     }
   }
 
-  String _validateWalletName(String walletName) {
+  String _validateWalletName(String walletName, List<Wallet> existingWallets) {
     if (walletName == null || walletName.length == 0) {
       return kWalletNeedsNameString;
+    }
+    for (Wallet wallet in existingWallets) {
+      if (wallet.name == walletName) {
+        return kWalletWithSuchNameExistsString;
+      }
     }
     return null;
   }
 
-  String _validatePassword(String password) {
+  String _validatePassword(String password, String repeatPassword) {
     if (password == null || password.length < 4) {
       return kPasswordShortString;
+    }
+    if (password != repeatPassword) {
+      return kPasswordsDontMatchString;
     }
     return null;
   }
