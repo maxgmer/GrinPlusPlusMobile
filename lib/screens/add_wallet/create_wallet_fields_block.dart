@@ -15,7 +15,6 @@ class CreateWalletFieldsBlock extends StatefulWidget {
 
 class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
   AddWalletBloc _bloc;
-  WalletChoiceBloc _walletChoiceBloc;
   TextEditingController _walletNameController;
   TextEditingController _passwordController;
   TextEditingController _repeatPasswordController;
@@ -24,7 +23,6 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<AddWalletBloc>(context);
-    _walletChoiceBloc = BlocProvider.of<WalletChoiceBloc>(context);
     _walletNameController = TextEditingController();
     _passwordController = TextEditingController();
     _repeatPasswordController = TextEditingController();
@@ -172,11 +170,11 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
             child: IconButton(
-              onPressed: () => _bloc.add(CreateWallet(
+              onPressed: () => _bloc.add(CreateWalletLoginAndPassword(
                 _walletNameController.text,
                 _passwordController.text,
                 _repeatPasswordController.text,
-                _walletChoiceBloc.state.wallets,
+                BlocProvider.of<WalletChoiceBloc>(context).state.wallets,
               )),
               tooltip: kSubmitWalletCreationString,
               icon: Icon(Icons.check, color: kColorAlmostWhite, size: 30),
@@ -185,11 +183,5 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
         ],
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _walletChoiceBloc.close();
-    super.dispose();
   }
 }

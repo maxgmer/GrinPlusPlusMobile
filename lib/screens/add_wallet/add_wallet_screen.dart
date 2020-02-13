@@ -28,7 +28,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
   Widget build(BuildContext context) {
     return BlocListener<AddWalletBloc, AddWalletState>(
       listener: (context, state) {
-        if (state.newWallet != null) {
+        if (state.walletCreatedSuccessfully) {
           _walletChoiceBloc.add(NewWallet(state.newWallet));
           _bloc.add(ResetState());
         }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
@@ -28,12 +27,10 @@ class WalletChoiceFab extends StatelessWidget {
 
             return FloatingActionButton(
               onPressed: fabPressed,
-              shape: CircleBorder(),
               child: Icon(
                 fabIcon,
                 color: Colors.black,
               ),
-              backgroundColor: kColorAlmostWhite,
               tooltip: kAddWalletString,
             );
           }

@@ -11,7 +11,7 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
 
   @override
   Stream<AddWalletState> mapEventToState(AddWalletEvent event) async* {
-    if (event is CreateWallet) {
+    if (event is CreateWalletLoginAndPassword) {
       String walletName = event.walletName;
       String password = event.password;
       String repeatPassword = event.repeatPassword;
@@ -24,6 +24,8 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
           walletNameError: null,
           passwordError: null,
           wallet: Wallet(name: walletName),
+          //TODO: later remove and set to true only after seed phrase generation
+          walletCreatedSuccessfully: true,
         );
       } else {
         yield state.copyWith(
