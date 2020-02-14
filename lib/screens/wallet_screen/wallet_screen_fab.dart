@@ -25,10 +25,13 @@ class WalletScreenFab extends StatelessWidget {
         } else {
           fabContent = Icon(Icons.refresh, color: Colors.black);
         }
-        return FloatingActionButton(
-          onPressed: () => bloc.add(RefreshWallet()),
-          tooltip: kRefreshString,
-          child: fabContent,
+        return Padding(
+          padding: const EdgeInsets.all(14),
+          child: FloatingActionButton(
+            onPressed: () => bloc.add(RefreshWallet()),
+            tooltip: kRefreshString,
+            child: fabContent,
+          ),
         );
       }
     );

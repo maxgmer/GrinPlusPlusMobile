@@ -29,7 +29,12 @@ class FundsBlock extends StatelessWidget {
               '$kTotalString: 0.000000000',
               style: smallText,
             ),
-            currencyLogo,
+            SvgPicture.asset(
+              'assets/images/grin-logo-eyes.svg',
+              width: grinLogoDims + 4,
+              height: grinLogoDims + 4,
+              color: kColorAlmostWhite,
+            ),
           ],
         ),
         Row(

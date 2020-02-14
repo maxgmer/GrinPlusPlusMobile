@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/buttons_block.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/funds_block.dart';
+import 'package:grin_plus_plus/screens/wallet_screen/transactions_list.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/wallet_screen_fab.dart';
-import 'package:grin_plus_plus/widgets/bottom_navigation_bar.dart';
 
 class WalletScreen extends StatefulWidget {
   WalletScreen();
@@ -26,18 +26,26 @@ class _WalletScreenState extends State<WalletScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            FundsBlock(),
-            ButtonsBlock(),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
+            child: Column(
+              children: <Widget>[
+                FundsBlock(),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  child: ButtonsBlock(),
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: TransactionsList(),
+          ),
+        ],
       ),
-      bottomNavigationBar: BottomNavBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: WalletScreenFab(_bloc),
     );
   }

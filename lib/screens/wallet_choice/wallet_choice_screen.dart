@@ -6,7 +6,6 @@ import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/wallet_choice_fab.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/wallets_list_widget.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/welcome_screen_widget.dart';
-import 'package:grin_plus_plus/widgets/bottom_navigation_bar.dart';
 
 class WalletChoiceScreen extends StatefulWidget {
   @override
@@ -39,8 +38,6 @@ class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
           }
         }
       ),
-      bottomNavigationBar: BottomNavBar(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: WalletChoiceFab(_bloc),
     );
   }
