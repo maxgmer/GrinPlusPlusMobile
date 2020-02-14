@@ -7,5 +7,4 @@ abstract class WalletScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class ShowWalletInfo extends WalletScreenEvent {}
-class HideWalletInfo extends WalletScreenEvent {}
+class RefreshWallet extends WalletScreenEvent {}

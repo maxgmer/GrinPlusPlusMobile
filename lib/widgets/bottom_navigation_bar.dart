@@ -17,7 +17,7 @@ class BottomNavBar extends StatelessWidget {
             IconButton(
               tooltip: kReportString,
               icon: Icon(
-                Icons.bug_report,
+                Icons.info,
                 color: kColorAlmostWhite,
               ),
               onPressed: () {},

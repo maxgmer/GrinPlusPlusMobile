@@ -11,11 +11,12 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
 
   @override
   Stream<WalletScreenState> mapEventToState(WalletScreenEvent event) async* {
-    if (event is ShowWalletInfo) {
-      yield state.copyWith(showingWalletInfo: true);
-    }
-    if (event is HideWalletInfo) {
-      yield state.copyWith(showingWalletInfo: false);
+    if (event is RefreshWallet) {
+      if (state.refreshing) return;
+
+      yield state.copyWith(refreshing: true);
+      await Future.delayed(Duration(seconds: 3));
+      yield state.copyWith(refreshing: false);
     }
   }
 }

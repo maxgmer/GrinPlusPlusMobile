@@ -6,7 +6,7 @@ import 'package:grin_plus_plus/strings.dart';
 class FundsBlock extends StatelessWidget {
   static final grinLogoDims = 26.0;
   final TextStyle smallText = TextStyle(
-    fontSize: 16,
+    fontSize: 14,
     fontWeight: FontWeight.w400,
     color: kColorAlmostWhite,
   );
@@ -20,22 +20,10 @@ class FundsBlock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Row(
-          children: <Widget>[
-            Text(
-              '$kSpendableString: 0.000000000',
-              style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.w400,
-                color: kColorAlmostWhite,
-              ),
-            ),
-            currencyLogo,
-          ],
-        ),
-        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               '$kTotalString: 0.000000000',
@@ -45,6 +33,7 @@ class FundsBlock extends StatelessWidget {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               '$kImmatureString: 0.000000000',
@@ -54,6 +43,7 @@ class FundsBlock extends StatelessWidget {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               '$kUnconfirmedString: 0.000000000',
@@ -63,6 +53,7 @@ class FundsBlock extends StatelessWidget {
           ],
         ),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
               '$kLockedString: 0.000000000',
@@ -70,6 +61,23 @@ class FundsBlock extends StatelessWidget {
             ),
             currencyLogo,
           ],
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '$kSpendableString: 0.000000000',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.w400,
+                  color: kColorAlmostWhite,
+                ),
+              ),
+              currencyLogo,
+            ],
+          ),
         ),
       ],
     );

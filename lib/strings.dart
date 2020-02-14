@@ -13,6 +13,8 @@ const List<String> kThisWeekdayStrings = [
 ];
 const String kLastTimeVisitedString = 'Last time visited';
 const String kAddWalletString = 'Add wallet';
+const String kReturnBackString = 'Return back';
+const String kRefreshString = 'Refresh';
 const String kDeleteString = 'Delete wallet';
 const String kSettingsString = 'Application settings';
 const String kReportString = 'Report a bug/suggestion';
@@ -34,3 +36,6 @@ const String kImmatureString = 'Immature';
 const String kUnconfirmedString = 'Unconfirmed';
 const String kLockedString = 'Locked';
 const String kScreenNotImplementedString = 'Trying to run a screen which probably hasn\'t been implemented or added to root_screen.dart switch clauses.';
+const String kSendString = 'Send';
+const String kReceiveString = 'Receive';
+const String kFinalizeString = 'Finalize';

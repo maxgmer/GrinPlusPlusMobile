@@ -17,12 +17,15 @@ class WalletChoiceFab extends StatelessWidget {
           builder: (context, state) {
             Function fabPressed;
             IconData fabIcon;
+            String tooltip;
             if (state.addButtonPressed) {
               fabIcon = Icons.arrow_back;
               fabPressed = () => bloc.add(ReturnToMainScreen());
+              tooltip = kReturnBackString;
             } else {
               fabIcon = Icons.add;
               fabPressed = () => bloc.add(AddWallet());
+              tooltip = kAddWalletString;
             }
 
             return FloatingActionButton(
@@ -31,7 +34,7 @@ class WalletChoiceFab extends StatelessWidget {
                 fabIcon,
                 color: Colors.black,
               ),
-              tooltip: kAddWalletString,
+              tooltip: tooltip,
             );
           }
         );

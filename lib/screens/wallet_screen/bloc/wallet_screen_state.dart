@@ -1,24 +1,24 @@
 import 'package:equatable/equatable.dart';
 
 class WalletScreenState extends Equatable {
-  final bool showingWalletInfo;
+  final bool refreshing;
 
   WalletScreenState({
-    this.showingWalletInfo,
+    this.refreshing = false,
   });
 
   factory WalletScreenState.initial() {
     return WalletScreenState(
-      showingWalletInfo: false,
+      refreshing: false,
     );
   }
 
-  WalletScreenState copyWith({bool showingWalletInfo}) {
+  WalletScreenState copyWith({bool refreshing}) {
     return WalletScreenState(
-      showingWalletInfo: showingWalletInfo ?? this.showingWalletInfo,
+      refreshing: refreshing ?? this.refreshing,
     );
   }
 
   @override
-  List<Object> get props => [showingWalletInfo];
+  List<Object> get props => [refreshing];
 }

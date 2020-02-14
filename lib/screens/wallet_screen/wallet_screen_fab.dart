@@ -11,27 +11,26 @@ class WalletScreenFab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(
-      builder: (context) {
-        return BlocBuilder<WalletScreenBloc, WalletScreenState>(
-            builder: (context, state) {
-              Function onPressed;
-              IconData icon;
-              if (state.showingWalletInfo) {
-                onPressed = () => bloc.add(HideWalletInfo());
-                icon = Icons.arrow_back;
-              } else {
-                onPressed = () => bloc.add(ShowWalletInfo());
-                icon = Icons.info_outline;
-              }
-              return FloatingActionButton(
-                onPressed: onPressed,
-                child: Icon(icon, color: Colors.black),
-                tooltip: kAddWalletString,
-              );
-            }
+    return BlocBuilder<WalletScreenBloc, WalletScreenState>(
+      builder: (context, state) {
+        Widget fabContent;
+        if (state.refreshing) {
+          fabContent = Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              backgroundColor: Colors.transparent,
+              strokeWidth: 2,
+            ),
+          );
+        } else {
+          fabContent = Icon(Icons.refresh, color: Colors.black);
+        }
+        return FloatingActionButton(
+          onPressed: () => bloc.add(RefreshWallet()),
+          tooltip: kRefreshString,
+          child: fabContent,
         );
-      },
+      }
     );
   }
 }
