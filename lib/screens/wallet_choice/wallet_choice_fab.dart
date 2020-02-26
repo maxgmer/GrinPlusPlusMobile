@@ -28,16 +28,13 @@ class WalletChoiceFab extends StatelessWidget {
               tooltip = kAddWalletString;
             }
 
-            return Padding(
-              padding: const EdgeInsets.all(14),
-              child: FloatingActionButton(
-                onPressed: fabPressed,
-                child: Icon(
-                  fabIcon,
-                  color: Colors.black,
-                ),
-                tooltip: tooltip,
+            return FloatingActionButton(
+              onPressed: fabPressed,
+              child: Icon(
+                fabIcon,
+                color: Colors.black,
               ),
+              tooltip: tooltip,
             );
           }
         );

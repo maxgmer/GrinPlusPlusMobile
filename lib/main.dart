@@ -26,7 +26,8 @@ class GrinPlusPlus extends StatelessWidget {
           hoverElevation: 0,
           shape: CircleBorder(),
           backgroundColor: kColorAlmostWhite,
-        )
+        ),
+        unselectedWidgetColor: kColorAlmostWhite,
       ),
       home: BlocProvider<RootBloc>(
         create: (context) => RootBloc(),

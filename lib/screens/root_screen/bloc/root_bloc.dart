@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/root_screen/screens.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 
 class RootBloc extends Bloc<RootEvent, RootState> {
   @override

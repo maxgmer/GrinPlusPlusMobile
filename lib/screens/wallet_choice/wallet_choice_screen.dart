@@ -38,6 +38,7 @@ class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
           }
         }
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: WalletChoiceFab(_bloc),
     );
   }

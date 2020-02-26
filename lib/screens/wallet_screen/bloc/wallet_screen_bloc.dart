@@ -18,5 +18,8 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
       await Future.delayed(Duration(seconds: 3));
       yield state.copyWith(refreshing: false);
     }
+    if (event is ResetState) {
+      yield initialState;
+    }
   }
 }

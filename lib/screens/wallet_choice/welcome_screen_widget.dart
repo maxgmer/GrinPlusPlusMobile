@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/fade_animator.dart';
+import 'package:grin_plus_plus/widgets/fade_in.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
@@ -11,11 +12,7 @@ class WelcomeScreen extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          FadeAnimator(
-            startOpacity: 0,
-            endOpacity: 1,
-            duration: 1500,
-            delay: 1000,
+          FadeIn(
             child: Text(
               '$kHelloString!',
                 textAlign: TextAlign.center,

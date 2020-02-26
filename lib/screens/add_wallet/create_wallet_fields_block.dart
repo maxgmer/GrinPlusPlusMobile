@@ -7,6 +7,7 @@ import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_event.dart';
 import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_state.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
+import 'package:grin_plus_plus/widgets/text_field.dart';
 
 class CreateWalletFieldsBlock extends StatefulWidget {
   @override
@@ -35,136 +36,49 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                color: kColorAlmostWhite,
-              ),
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.walletNameError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.walletNameError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 1.5,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15.0,
-                  horizontal: 10,
-                ),
-                labelText: state.walletNameError == null
-                    ? kWalletNameString
-                    : state.walletNameError,
-                labelStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: state.walletNameError == null
-                      ? kColorAlmostWhite
-                      : kColorErrorRed,
-                ),
-              ),
+            child: BorderOnlyTextField(
+              boxColor: state.walletNameError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelColor: state.walletNameError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelText: state.walletNameError == null
+                  ? kWalletNameString
+                  : state.walletNameError,
               controller: _walletNameController,
-              textInputAction: TextInputAction.done,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                color: kColorAlmostWhite,
-              ),
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.passwordError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.passwordError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 1.5,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15.0,
-                  horizontal: 10,
-                ),
-                labelText: state.passwordError == null
-                    ? kPasswordString
-                    : state.passwordError,
-                labelStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: state.passwordError == null
-                      ? kColorAlmostWhite
-                      : kColorErrorRed,
-                ),
-              ),
-              obscureText: true,
+            child: BorderOnlyTextField(
+              boxColor: state.passwordError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelColor: state.passwordError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelText: state.passwordError == null
+                  ? kPasswordString
+                  : state.passwordError,
               controller: _passwordController,
-              textInputAction: TextInputAction.done,
+              obscureText: true,
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: TextField(
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                color: kColorAlmostWhite,
-              ),
-              decoration: InputDecoration(
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.passwordError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 2,
-                  ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                    color: state.passwordError == null
-                        ? kColorAlmostWhite
-                        : kColorErrorRed,
-                    width: 1.5,
-                  ),
-                ),
-                contentPadding: const EdgeInsets.symmetric(
-                  vertical: 15.0,
-                  horizontal: 10,
-                ),
-                labelText: state.passwordError == null
-                    ? kPasswordRepeatString
-                    : state.passwordError,
-                labelStyle: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: state.passwordError == null
-                      ? kColorAlmostWhite
-                      : kColorErrorRed,
-                ),
-              ),
-              obscureText: true,
+            child: BorderOnlyTextField(
+              boxColor: state.passwordError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelColor: state.passwordError == null
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelText: state.passwordError == null
+                  ? kPasswordRepeatString
+                  : state.passwordError,
               controller: _repeatPasswordController,
-              textInputAction: TextInputAction.done,
+              obscureText: true,
             ),
           ),
           Padding(

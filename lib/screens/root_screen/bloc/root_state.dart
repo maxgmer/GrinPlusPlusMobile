@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/screens/root_screen/screens.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 
 class RootState extends Equatable {
   final Map<Screen, Object> screenData;

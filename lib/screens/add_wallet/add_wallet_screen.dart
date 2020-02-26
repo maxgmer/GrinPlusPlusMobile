@@ -5,7 +5,7 @@ import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/add_wallet/create_wallet_fields_block.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
-import 'package:grin_plus_plus/widgets/fade_animator.dart';
+import 'package:grin_plus_plus/widgets/fade_in.dart';
 import 'bloc/bloc.dart';
 
 class AddWalletScreen extends StatefulWidget {
@@ -37,11 +37,7 @@ class _AddWalletScreenState extends State<AddWalletScreen> {
         constraints: BoxConstraints.expand(),
         child: Center(
           child: SingleChildScrollView(
-            child: FadeAnimator(
-              startOpacity: 0,
-              endOpacity: 1,
-              duration: 1500,
-              delay: 0,
+            child: FadeIn(
               child: Padding(
                 padding: const EdgeInsets.all(24),
                 child: Column(

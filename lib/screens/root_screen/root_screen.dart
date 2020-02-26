@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/screens/add_wallet/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/root_screen/screens.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
+import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/send_screen/send_screen.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/wallet_choice_screen.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
@@ -63,12 +65,16 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
               BlocProvider<WalletScreenBloc>(
                 create: (BuildContext context) => WalletScreenBloc(),
               ),
+              BlocProvider<SendScreenBloc>(
+                create: (BuildContext context) => SendScreenBloc(),
+              ),
             ],
             child: BlocBuilder<RootBloc, RootState>(
               builder: (context, state) {
                 switch (state.currentScreen) {
                   case Screen.walletChoiceScreen: return WalletChoiceScreen();
-                  case Screen.walletScreen: return WalletScreen();
+                  case Screen.walletScreen: return WalletScreen(state.screenData[Screen.walletScreen]);
+                  case Screen.sendScreen: return SendScreen(state.screenData[Screen.sendScreen]);
                 }
                 throw UnimplementedError(kScreenNotImplementedString);
               },

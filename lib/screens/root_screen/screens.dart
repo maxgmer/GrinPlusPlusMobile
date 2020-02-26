@@ -1,1 +1,0 @@
-enum Screen {walletChoiceScreen, walletScreen}

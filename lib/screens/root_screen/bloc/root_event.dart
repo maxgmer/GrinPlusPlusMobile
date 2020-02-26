@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/screens/root_screen/screens.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 
 abstract class RootEvent extends Equatable {
   const RootEvent();

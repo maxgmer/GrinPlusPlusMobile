@@ -5,10 +5,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/root_screen/screens.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/utils.dart';
-import 'package:grin_plus_plus/widgets/fade_animator.dart';
+import 'package:grin_plus_plus/widgets/fade_in.dart';
 
 class WalletsList extends StatelessWidget {
   final List<Wallet> wallets;
@@ -17,11 +17,7 @@ class WalletsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FadeAnimator(
-      startOpacity: 0,
-      endOpacity: 1,
-      duration: 1500,
-      delay: 0,
+    return FadeIn(
       child: Center(
         child: ListView.builder(
           itemCount: wallets.length,

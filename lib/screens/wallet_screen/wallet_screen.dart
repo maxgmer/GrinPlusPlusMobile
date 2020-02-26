@@ -1,14 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_screen/buttons_block.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/funds_block.dart';
+import 'package:grin_plus_plus/screens/wallet_screen/refresh_button.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/transactions_list.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/wallet_screen_fab.dart';
 
 class WalletScreen extends StatefulWidget {
-  WalletScreen();
+  final Wallet wallet;
+
+  WalletScreen(this.wallet);
 
   @override
   State<StatefulWidget> createState() => _WalletScreenState();
@@ -31,18 +34,21 @@ class _WalletScreenState extends State<WalletScreen> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
-            child: Column(
+            child: FundsBlock(),
+          ),
+          Expanded(
+            child: Stack(
               children: <Widget>[
-                FundsBlock(),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 14),
-                  child: ButtonsBlock(),
+                TransactionsList(),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 75),
+                    child: RefreshButton(_bloc),
+                  ),
                 ),
               ],
             ),
-          ),
-          Expanded(
-            child: TransactionsList(),
           ),
         ],
       ),
