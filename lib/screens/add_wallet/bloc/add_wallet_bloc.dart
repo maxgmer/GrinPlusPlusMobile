@@ -1,17 +1,25 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grin_plus_plus/api/wallet_api/create_wallet_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/models/wallet.dart';
+import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
 import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_event.dart';
 import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_state.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
+  final WalletApi repository;
+
+  AddWalletBloc({@required this.repository});
+
   @override
   AddWalletState get initialState => AddWalletState.initial();
 
   @override
   Stream<AddWalletState> mapEventToState(AddWalletEvent event) async* {
-    if (event is CreateWalletLoginAndPassword) {
+    if (event is CreateWallet) {
       String walletName = event.walletName;
       String password = event.password;
       String repeatPassword = event.repeatPassword;
@@ -20,12 +28,20 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
       String passwordError = _validatePassword(password, repeatPassword);
 
       if (nameError == null && passwordError == null) {
+        CreateWalletResponse createWalletResponse = await repository.createWallet(walletName, password);
+        if (createWalletResponse.failedMessage != null) {
+          NotificationsRepository.showNotification(Notification(
+            title: kErrorString,
+            message: createWalletResponse.failedMessage,
+            notificationType: NotificationType.failure,
+          ));
+        }
         yield state.copyWith(
           walletNameError: null,
           passwordError: null,
           wallet: Wallet(name: walletName),
-          //TODO: later remove and set to true only after seed phrase generation
-          walletCreatedSuccessfully: true,
+          seed: createWalletResponse.walletSeed,
+          screen: AddWalletScreenState.showingSeed,
         );
       } else {
         yield state.copyWith(

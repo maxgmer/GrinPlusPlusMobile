@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/root_screen.dart';
 
-void main() {
+void main() async {
+  loadConfig();
   runApp(GrinPlusPlus());
 }
 
@@ -34,5 +36,14 @@ class GrinPlusPlus extends StatelessWidget {
         child: RootScreen(),
       ),
     );
+  }
+}
+
+void loadConfig() async {
+  const requiredEnvVariables = const ['OWNER_URL'];
+
+  await DotEnv().load('.env');
+  if (!DotEnv().isEveryDefined(requiredEnvVariables)) {
+    await DotEnv().load('default.env');
   }
 }

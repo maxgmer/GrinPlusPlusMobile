@@ -60,7 +60,8 @@ class TransactionTile extends StatelessWidget {
               ),
             ),
             Text(
-              'today at 15:40',
+              //TODO parse date for real
+              'today at 15:40)',
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

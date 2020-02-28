@@ -9,13 +9,13 @@ abstract class AddWalletEvent extends Equatable {
 }
 
 class ResetState extends AddWalletEvent {}
-class CreateWalletLoginAndPassword extends AddWalletEvent {
+class CreateWallet extends AddWalletEvent {
   final String walletName;
   final String password;
   final String repeatPassword;
   final List<Wallet> existingWallets;
 
-  const CreateWalletLoginAndPassword(
+  const CreateWallet(
       this.walletName,
       this.password,
       this.repeatPassword,

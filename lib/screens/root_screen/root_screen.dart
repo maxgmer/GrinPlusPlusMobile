@@ -1,8 +1,11 @@
 import 'dart:ui';
-
-import 'package:flutter/cupertino.dart';
+import 'package:achievement_view/achievement_view.dart';
+import 'package:achievement_view/achievement_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
+import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart' as Notifications;
+import 'package:grin_plus_plus/repositories/session_repository.dart';
 import 'package:grin_plus_plus/screens/add_wallet/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
@@ -28,6 +31,9 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
     _mainBloc = BlocProvider.of<RootBloc>(context);
+    Notifications.NotificationsRepository.subscribe((Notifications.Notification notification) {
+      return _showNotification(context, notification);
+    });
   }
 
   @override
@@ -60,7 +66,9 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 create: (BuildContext context) => WalletChoiceBloc(),
               ),
               BlocProvider<AddWalletBloc>(
-                create: (BuildContext context) => AddWalletBloc(),
+                create: (BuildContext context) => AddWalletBloc(
+                  repository: WalletApi(),
+                ),
               ),
               BlocProvider<WalletScreenBloc>(
                 create: (BuildContext context) => WalletScreenBloc(),
@@ -85,6 +93,31 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
     );
   }
 
+  bool _canShowNotification = true;
+  bool _showNotification(BuildContext context, Notifications.Notification notification) {
+    if (!_canShowNotification) {
+      return false;
+    }
+    _canShowNotification = false;
+    AchievementView(
+      context,
+      title: notification.title,
+      subTitle: notification.message,
+      isCircle: false,
+      icon: notification.icon,
+      color: notification.color,
+      typeAnimationContent: AnimationTypeAchievement.fade,
+      textStyleTitle: notification.titleStyle,
+      textStyleSubTitle: notification.messageStyle,
+      listener: (status) {
+        if (status == AchievementState.closed) {
+          _canShowNotification = true;
+        }
+      },
+    )..show();
+    return true;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.paused) {
@@ -95,6 +128,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    SessionRepository.dispose();
     super.dispose();
   }
 }

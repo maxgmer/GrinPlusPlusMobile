@@ -84,7 +84,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
           Padding(
             padding: const EdgeInsets.only(bottom: 24),
             child: IconButton(
-              onPressed: () => _bloc.add(CreateWalletLoginAndPassword(
+              onPressed: () => _bloc.add(CreateWallet(
                 _walletNameController.text,
                 _passwordController.text,
                 _repeatPasswordController.text,
