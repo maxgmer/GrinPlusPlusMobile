@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:grin_plus_plus/api/dio_provider.dart';
 import 'package:grin_plus_plus/api/wallet_api/create_wallet_response.dart';
-import 'package:grin_plus_plus/strings.dart';
 
 class WalletApi {
   final Dio _dio = DioProvider.get();
@@ -19,12 +18,10 @@ class WalletApi {
       );
       if (response.statusCode == 200) {
         return CreateWalletResponse.fromJson(response.data);
-      } else {
-        return CreateWalletResponse(failedMessage: response.data ?? kCouldNotCreateWalletString);
       }
-    } catch (error, stacktrace) {
-      print('Exception occured: $error stackTrace: $stacktrace');
-      return null;
+    } catch (error) {
+      print('Exception occured: $error');
     }
+    return null;
   }
 }

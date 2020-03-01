@@ -8,12 +8,6 @@ class WalletChoiceBloc extends Bloc<WalletChoiceEvent, WalletChoiceState> {
 
   @override
   Stream<WalletChoiceState> mapEventToState(WalletChoiceEvent event) async* {
-    if (event is AddWallet) {
-      yield state.copyWith(addButtonPressed: true);
-    }
-    if (event is ReturnToMainScreen) {
-      yield state.copyWith(addButtonPressed: false);
-    }
     if (event is NewWallet) {
       yield state.copyWith(
         wallets: state.wallets..add(event.wallet),

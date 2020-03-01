@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_bloc.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_event.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_state.dart';
+import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/text_field.dart';
@@ -15,7 +13,7 @@ class CreateWalletFieldsBlock extends StatefulWidget {
 }
 
 class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
-  AddWalletBloc _bloc;
+  CreateWalletBloc _bloc;
   TextEditingController _walletNameController;
   TextEditingController _passwordController;
   TextEditingController _repeatPasswordController;
@@ -23,7 +21,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<AddWalletBloc>(context);
+    _bloc = BlocProvider.of<CreateWalletBloc>(context);
     _walletNameController = TextEditingController();
     _passwordController = TextEditingController();
     _repeatPasswordController = TextEditingController();
@@ -31,7 +29,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddWalletBloc, AddWalletState>(
+    return BlocBuilder<CreateWalletBloc, CreateWalletState>(
       builder: (context, state) => Column(
         children: <Widget>[
           Padding(

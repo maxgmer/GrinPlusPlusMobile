@@ -6,9 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart' as Notifications;
 import 'package:grin_plus_plus/repositories/session_repository.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/create_wallet_screen/create_wallet_screen.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
+import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/seed_screen/seed_screen.dart';
 import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/send_screen/send_screen.dart';
 import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
@@ -65,8 +68,8 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
               BlocProvider<WalletChoiceBloc>(
                 create: (BuildContext context) => WalletChoiceBloc(),
               ),
-              BlocProvider<AddWalletBloc>(
-                create: (BuildContext context) => AddWalletBloc(
+              BlocProvider<CreateWalletBloc>(
+                create: (BuildContext context) => CreateWalletBloc(
                   repository: WalletApi(),
                 ),
               ),
@@ -76,11 +79,16 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
               BlocProvider<SendScreenBloc>(
                 create: (BuildContext context) => SendScreenBloc(),
               ),
+              BlocProvider<SeedScreenBloc>(
+                create: (BuildContext context) => SeedScreenBloc(),
+              ),
             ],
             child: BlocBuilder<RootBloc, RootState>(
               builder: (context, state) {
                 switch (state.currentScreen) {
                   case Screen.walletChoiceScreen: return WalletChoiceScreen();
+                  case Screen.createWalletScreen: return CreateWalletScreen();
+                  case Screen.showSeedScreen: return SeedScreen(state.screenData[Screen.showSeedScreen]);
                   case Screen.walletScreen: return WalletScreen(state.screenData[Screen.walletScreen]);
                   case Screen.sendScreen: return SendScreen(state.screenData[Screen.sendScreen]);
                 }

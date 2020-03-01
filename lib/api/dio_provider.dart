@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
 import 'package:grin_plus_plus/repositories/session_repository.dart';
+import 'package:grin_plus_plus/strings.dart';
 
 class DioProvider {
   static Dio dio;
@@ -19,6 +21,7 @@ class DioProvider {
       responseBody: true,
     ));
     dio.interceptors.add(TokenInterceptor());
+    dio.interceptors.add(ErrorInterceptor());
   }
 
   static Dio get() {
@@ -27,6 +30,18 @@ class DioProvider {
     }
 
     return dio;
+  }
+}
+
+class ErrorInterceptor extends Interceptor {
+  @override
+  Future onError(DioError error) {
+    NotificationsRepository.showNotification(Notification(
+      title: kErrorString,
+      message: error.response.data.toString() ?? error.message,
+      notificationType: NotificationType.failure,
+    ));
+    return Future(() => error);
   }
 }
 

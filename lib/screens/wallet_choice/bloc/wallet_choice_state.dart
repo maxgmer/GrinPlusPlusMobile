@@ -5,10 +5,12 @@ import 'package:grin_plus_plus/models/wallet.dart';
 class WalletChoiceState extends Equatable {
   final List<Wallet> wallets;
   final bool addButtonPressed;
+  final bool initialized;
 
   WalletChoiceState({
     @required this.wallets,
     this.addButtonPressed = false,
+    this.initialized,
   });
 
   factory WalletChoiceState.initial() {

@@ -40,7 +40,10 @@ class GrinPlusPlus extends StatelessWidget {
 }
 
 void loadConfig() async {
-  const requiredEnvVariables = const ['OWNER_URL'];
+  const requiredEnvVariables = const [
+    'OWNER_URL',
+    'HIDDEN_SEED_WORDS_NUMBER',
+  ];
 
   await DotEnv().load('.env');
   if (!DotEnv().isEveryDefined(requiredEnvVariables)) {

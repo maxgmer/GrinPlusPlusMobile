@@ -5,20 +5,19 @@ import 'package:grin_plus_plus/api/wallet_api/create_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_event.dart';
-import 'package:grin_plus_plus/screens/add_wallet/bloc/add_wallet_state.dart';
+import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
-class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
+class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
   final WalletApi repository;
 
-  AddWalletBloc({@required this.repository});
+  CreateWalletBloc({@required this.repository});
 
   @override
-  AddWalletState get initialState => AddWalletState.initial();
+  CreateWalletState get initialState => CreateWalletState.initial();
 
   @override
-  Stream<AddWalletState> mapEventToState(AddWalletEvent event) async* {
+  Stream<CreateWalletState> mapEventToState(CreateWalletEvent event) async* {
     if (event is CreateWallet) {
       String walletName = event.walletName;
       String password = event.password;
@@ -29,29 +28,26 @@ class AddWalletBloc extends Bloc<AddWalletEvent, AddWalletState> {
 
       if (nameError == null && passwordError == null) {
         CreateWalletResponse createWalletResponse = await repository.createWallet(walletName, password);
-        if (createWalletResponse.failedMessage != null) {
-          NotificationsRepository.showNotification(Notification(
-            title: kErrorString,
-            message: createWalletResponse.failedMessage,
-            notificationType: NotificationType.failure,
-          ));
+        if (createWalletResponse != null) {
+          if (createWalletResponse.failedMessage != null) {
+            NotificationsRepository.showNotification(Notification(
+              title: kErrorString,
+              message: createWalletResponse.failedMessage,
+              notificationType: NotificationType.failure,
+            ));
+          }
+          yield state.copyWith(
+            walletNameError: null,
+            passwordError: null,
+            newWalletSeed: createWalletResponse.walletSeed,
+          );
         }
-        yield state.copyWith(
-          walletNameError: null,
-          passwordError: null,
-          wallet: Wallet(name: walletName),
-          seed: createWalletResponse.walletSeed,
-          screen: AddWalletScreenState.showingSeed,
-        );
       } else {
         yield state.copyWith(
           walletNameError: nameError,
           passwordError: passwordError,
         );
       }
-    }
-    if (event is ResetState) {
-      yield AddWalletState.initial();
     }
   }
 
