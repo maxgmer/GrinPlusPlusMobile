@@ -48,18 +48,22 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
           endOpacity: 1,
           duration: 15000,
           delay: 5000,
-          child: Container(
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/anonymous.jpg"),
-                fit: BoxFit.cover,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("assets/images/anonymous.jpg"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(color: Colors.transparent),
+              ),
+            ],
           ),
-        ),
-        BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(color: Colors.transparent),
         ),
         Scaffold(
           backgroundColor: Colors.black.withOpacity(0.8),

@@ -10,7 +10,7 @@ class RootBloc extends Bloc<RootEvent, RootState> {
   @override
   Stream<RootState> mapEventToState(RootEvent event) async* {
     if (event is AppPaused) {
-      yield state.copyWith(currentScreen: Screen.walletChoiceScreen);
+
     }
     if (event is ChangeScreen) {
       Map<Screen, Object> screenData;

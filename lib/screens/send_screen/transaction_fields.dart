@@ -104,6 +104,4 @@ class _TransactionFieldsState extends State<TransactionFields> {
     _bloc.close();
     super.dispose();
   }
-
-
 }
