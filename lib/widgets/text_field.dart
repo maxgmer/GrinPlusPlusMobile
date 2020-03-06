@@ -22,6 +22,7 @@ class BorderOnlyTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       enabled: enabled,
+      cursorColor: kColorAlmostWhite,
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.w300,

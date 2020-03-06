@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/seed_bloc.dart';
@@ -8,6 +7,10 @@ import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/fade_in.dart';
 
 class WarningMessageScreen extends StatelessWidget {
+  final SeedScreenBloc bloc;
+
+  WarningMessageScreen(this.bloc);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,8 +56,7 @@ class WarningMessageScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => BlocProvider.of<SeedScreenBloc>(context)
-            .add(AcknowledgeWarning()),
+        onPressed: () => bloc.add(AcknowledgeWarning()),
         child: Icon(Icons.done),
         tooltip: kIUnderstandString,
       ),

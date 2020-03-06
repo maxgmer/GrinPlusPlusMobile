@@ -29,16 +29,10 @@ class _SeedScreenState extends State<SeedScreen> {
     return BlocBuilder<SeedScreenBloc, SeedScreenState>(
       builder: (context, state) {
         if (!state.warningAcknowledged) {
-          return WarningMessageScreen();
+          return WarningMessageScreen(_bloc);
         }
         return SeedPhraseScreen();
       },
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.close();
   }
 }
