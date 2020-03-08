@@ -1,11 +1,20 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
+import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart' as Notifications;
+import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
 import 'dart:math' as math;
 
+import 'package:grin_plus_plus/strings.dart';
+
 class SeedScreenBloc extends Bloc<SeedScreenEvent, SeedScreenState> {
+  RootBloc rootBloc;
+
+  SeedScreenBloc({@required this.rootBloc});
+
   @override
   SeedScreenState get initialState => SeedScreenState.initial();
 
@@ -29,20 +38,20 @@ class SeedScreenBloc extends Bloc<SeedScreenEvent, SeedScreenState> {
         }
       }
       if (walletCreationSuccessful) {
-        NotificationsRepository.showNotification(Notification(
-          title: 'Success',
-          message: 'Wallet created',
-          notificationType: NotificationType.success,
+        Notifications.NotificationsRepository.showNotification(Notifications.Notification(
+          title: kSuccessString,
+          message: kWalletCreatedString,
+          notificationType: Notifications.NotificationType.success,
         ));
+        rootBloc.add(ChangeScreen(Screen.walletChoiceScreen));
+        yield initialState;
       } else {
-        NotificationsRepository.showNotification(Notification(
-          title: 'Seed is not correct',
-          message: 'Please verify the seed words you\'ve typed',
-          notificationType: NotificationType.failure,
+        Notifications.NotificationsRepository.showNotification(Notifications.Notification(
+          title: kSeedIsNotCorrectString,
+          message: kPleaseVerifySeedString,
+          notificationType: Notifications.NotificationType.failure,
         ));
       }
-      yield state.copyWith(createdSuccessfully: walletCreationSuccessful);
-      yield initialState;
     }
     if (event is Init) {
       List<String> seed = event.seed.split(' ');

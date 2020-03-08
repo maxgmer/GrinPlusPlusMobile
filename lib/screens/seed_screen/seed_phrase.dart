@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
-import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/fade_animator.dart';
 import 'package:grin_plus_plus/widgets/fade_in.dart';
+import 'package:grin_plus_plus/widgets/text_field_with_inner_text.dart';
 
 class SeedPhraseScreen extends StatefulWidget {
   @override
@@ -81,9 +80,6 @@ class _SeedPhraseScreenState extends State<SeedPhraseScreen> {
               delay: 3000,
               child: BlocConsumer<SeedScreenBloc, SeedScreenState>(
                 listener: (context, state) {
-                  if (state.createdSuccessfully) {
-                    BlocProvider.of<RootBloc>(context).add(ChangeScreen(Screen.walletChoiceScreen));
-                  }
                   if (state.verifyingSeedPhrase) {
                     for (int i = 0; i < _seedWordControllers.length; i++) {
                       _seedWordControllers[i].text = state.obfuscatedSeed[i];
@@ -112,7 +108,7 @@ class _SeedPhraseScreenState extends State<SeedPhraseScreen> {
                                 children: firstHalf.map((seedWord) {
                                   bool enabled = _seedWordControllers[index].text.isEmpty &&
                                       state.verifyingSeedPhrase;
-                                  return _buildTextFieldWithText(
+                                  return BorderedTextFieldWithInnerText(
                                     enabled: enabled,
                                     text: '${index + 1}.',
                                     controller: _seedWordControllers[index++],
@@ -128,7 +124,7 @@ class _SeedPhraseScreenState extends State<SeedPhraseScreen> {
                                 children: secondHalf.map((seedWord) {
                                   bool enabled = _seedWordControllers[index].text.isEmpty &&
                                       state.verifyingSeedPhrase;
-                                  return _buildTextFieldWithText(
+                                  return BorderedTextFieldWithInnerText(
                                     enabled: enabled,
                                     text: '${index + 1}.',
                                     controller: _seedWordControllers[index++],
@@ -158,52 +154,6 @@ class _SeedPhraseScreenState extends State<SeedPhraseScreen> {
         },
         child: Icon(Icons.done),
         tooltip: kISavedMySeedString,
-      ),
-    );
-  }
-
-  Widget _buildTextFieldWithText({bool enabled, String text, TextEditingController controller}) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            border: Border.all(
-              color: enabled ? kColorAlmostWhite : kColorAlmostWhite.withOpacity(0.2),
-              width: 1.5,
-            ),
-            borderRadius: BorderRadius.circular(4)
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Row(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.only(right: 4),
-              child: Text(
-                text,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: kColorAlmostWhite,
-                ),
-              ),
-            ),
-            Expanded(
-              child: TextField(
-                enabled: enabled,
-                cursorColor: kColorAlmostWhite,
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                ),
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w300,
-                  color: kColorAlmostWhite,
-                ),
-                controller: controller,
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -13,7 +13,7 @@ class DioProvider {
     dio.options.baseUrl = DotEnv().env['OWNER_URL'];
     dio.options.connectTimeout = 15000;
     dio.options.receiveTimeout = 15000;
-    dio.options.validateStatus = (status) => status < 500;
+    dio.options.validateStatus = (status) => status == 200;
     dio.interceptors.add(LogInterceptor(
       requestHeader: true,
       requestBody: true,

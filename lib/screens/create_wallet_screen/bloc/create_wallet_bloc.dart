@@ -1,17 +1,19 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grin_plus_plus/api/wallet_api/create_wallet_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/models/wallet.dart';
-import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
+  final RootBloc rootBloc;
   final WalletApi repository;
 
-  CreateWalletBloc({@required this.repository});
+  CreateWalletBloc({@required this.rootBloc, @required this.repository});
 
   @override
   CreateWalletState get initialState => CreateWalletState.initial();
@@ -29,13 +31,10 @@ class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
       if (nameError == null && passwordError == null) {
         CreateWalletResponse createWalletResponse = await repository.createWallet(walletName, password);
         if (createWalletResponse != null) {
-          if (createWalletResponse.failedMessage != null) {
-            NotificationsRepository.showNotification(Notification(
-              title: kErrorString,
-              message: createWalletResponse.failedMessage,
-              notificationType: NotificationType.failure,
-            ));
-          }
+          rootBloc.add(ChangeScreen<String>(
+            Screen.showSeedScreen,
+            additionalData: createWalletResponse.walletSeed,
+          ));
           yield state.copyWith(
             walletNameError: null,
             passwordError: null,

@@ -8,6 +8,8 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/repositories/session_repository.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/create_wallet_screen.dart';
+import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_screen.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
@@ -70,21 +72,30 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
           body: MultiBlocProvider(
             providers: [
               BlocProvider<WalletChoiceBloc>(
-                create: (BuildContext context) => WalletChoiceBloc(),
+                create: (context) => WalletChoiceBloc(),
               ),
               BlocProvider<CreateWalletBloc>(
-                create: (BuildContext context) => CreateWalletBloc(
+                create: (context) => CreateWalletBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
+              ),
+              BlocProvider<RestoreWalletBloc>(
+                create: (context) => RestoreWalletBloc(
+                  rootBloc: _mainBloc,
                   repository: WalletApi(),
                 ),
               ),
               BlocProvider<WalletScreenBloc>(
-                create: (BuildContext context) => WalletScreenBloc(),
+                create: (context) => WalletScreenBloc(),
               ),
               BlocProvider<SendScreenBloc>(
-                create: (BuildContext context) => SendScreenBloc(),
+                create: (context) => SendScreenBloc(),
               ),
               BlocProvider<SeedScreenBloc>(
-                create: (BuildContext context) => SeedScreenBloc(),
+                create: (context) => SeedScreenBloc(
+                  rootBloc: _mainBloc,
+                ),
               ),
             ],
             child: BlocBuilder<RootBloc, RootState>(
@@ -92,6 +103,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 switch (state.currentScreen) {
                   case Screen.walletChoiceScreen: return WalletChoiceScreen();
                   case Screen.createWalletScreen: return CreateWalletScreen();
+                  case Screen.restoreWalletScreen: return RestoreWalletScreen();
                   case Screen.showSeedScreen: return SeedScreen(state.screenData[Screen.showSeedScreen]);
                   case Screen.walletScreen: return WalletScreen(state.screenData[Screen.walletScreen]);
                   case Screen.sendScreen: return SendScreen(state.screenData[Screen.sendScreen]);

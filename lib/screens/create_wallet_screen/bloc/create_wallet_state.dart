@@ -3,12 +3,10 @@ import 'package:equatable/equatable.dart';
 class CreateWalletState extends Equatable {
   final String walletNameError;
   final String passwordError;
-  final String newWalletSeed;
 
   CreateWalletState({
     this.walletNameError,
     this.passwordError,
-    this.newWalletSeed,
   });
 
   factory CreateWalletState.initial() {
@@ -20,7 +18,6 @@ class CreateWalletState extends Equatable {
     return CreateWalletState(
       walletNameError: walletNameError,
       passwordError: passwordError,
-      newWalletSeed: newWalletSeed ?? this.newWalletSeed,
     );
   }
 
@@ -28,6 +25,5 @@ class CreateWalletState extends Equatable {
   List<Object> get props => [
     walletNameError,
     passwordError,
-    newWalletSeed,
   ];
 }

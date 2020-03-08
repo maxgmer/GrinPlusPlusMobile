@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:grin_plus_plus/colors.dart';
 
-class BorderOnlyTextField extends StatelessWidget {
+class BorderedTextField extends StatelessWidget {
   final TextEditingController controller;
   final Color boxColor;
   final Color labelColor;
@@ -9,7 +9,7 @@ class BorderOnlyTextField extends StatelessWidget {
   final String labelText;
   final bool enabled;
 
-  BorderOnlyTextField({
+  BorderedTextField({
     this.controller,
     this.boxColor = kColorAlmostWhite,
     this.labelColor = kColorAlmostWhite,
@@ -43,7 +43,7 @@ class BorderOnlyTextField extends StatelessWidget {
         ),
         disabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: boxColor.withOpacity(0.35),
+            color: boxColor.withOpacity(0.2),
             width: 1.5,
           ),
         ),

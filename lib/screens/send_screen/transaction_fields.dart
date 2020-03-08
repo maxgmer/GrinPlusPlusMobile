@@ -38,7 +38,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
                 flex: 2,
                 child: Padding(
                   padding: const EdgeInsets.only(right: 12),
-                  child: BorderOnlyTextField(
+                  child: BorderedTextField(
                     labelText: kAmountString,
                     controller: _amountController,
                   ),
@@ -48,7 +48,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
                 flex: 1,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 12),
-                  child: BorderOnlyTextField(
+                  child: BorderedTextField(
                     labelText: kFeeString,
                     controller: _feeController,
                     enabled: false,
@@ -60,7 +60,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: BorderOnlyTextField(
+          child: BorderedTextField(
             labelText: kMessageString,
             controller: _messageController,
           ),
@@ -75,7 +75,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
               } else {
                 label = kAddressString;
               }
-              return BorderOnlyTextField(
+              return BorderedTextField(
                 labelText: label,
                 controller: _addressController,
               );

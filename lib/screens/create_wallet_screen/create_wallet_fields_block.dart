@@ -34,7 +34,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: BorderOnlyTextField(
+            child: BorderedTextField(
               boxColor: state.walletNameError == null
                   ? kColorAlmostWhite
                   : kColorErrorRed,
@@ -49,7 +49,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: BorderOnlyTextField(
+            child: BorderedTextField(
               boxColor: state.passwordError == null
                   ? kColorAlmostWhite
                   : kColorErrorRed,
@@ -65,7 +65,7 @@ class _CreateWalletFieldsBlockState extends State<CreateWalletFieldsBlock> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
-            child: BorderOnlyTextField(
+            child: BorderedTextField(
               boxColor: state.passwordError == null
                   ? kColorAlmostWhite
                   : kColorErrorRed,

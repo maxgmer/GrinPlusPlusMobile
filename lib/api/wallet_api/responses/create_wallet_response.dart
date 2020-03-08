@@ -9,12 +9,10 @@ class CreateWalletResponse extends Equatable {
   final String sessionToken;
   @JsonKey(name: 'wallet_seed')
   final String walletSeed;
-  final String failedMessage;
 
   CreateWalletResponse({
     this.sessionToken,
     this.walletSeed,
-    this.failedMessage,
   });
 
   @override
