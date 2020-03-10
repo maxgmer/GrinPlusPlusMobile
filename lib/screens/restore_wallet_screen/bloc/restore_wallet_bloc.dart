@@ -8,13 +8,20 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
+import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice/bloc/wallet_choice_bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class RestoreWalletBloc extends Bloc<RestoreWalletEvent, RestoreWalletState> {
   final RootBloc rootBloc;
+  final WalletChoiceBloc walletChoiceBloc;
   final WalletApi repository;
 
-  RestoreWalletBloc({@required this.rootBloc, @required this.repository});
+  RestoreWalletBloc({
+    @required this.rootBloc,
+    @required this.repository,
+    @required this.walletChoiceBloc,
+  });
 
   @override
   RestoreWalletState get initialState => RestoreWalletState.initial();
@@ -39,6 +46,7 @@ class RestoreWalletBloc extends Bloc<RestoreWalletEvent, RestoreWalletState> {
             message: kWalletRestoredString,
             notificationType: NotificationType.success,
           ));
+          walletChoiceBloc.add(LoadWallets());
           rootBloc.add(ChangeScreen(Screen.walletChoiceScreen));
           yield initialState;
         }

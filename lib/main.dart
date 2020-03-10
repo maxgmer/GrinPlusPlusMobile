@@ -4,9 +4,11 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/root_screen.dart';
+import 'package:grin_plus_plus/utils/data_utils.dart';
 
 void main() async {
-  loadConfig();
+  await loadConfig();
+  await DataUtils.init();
   runApp(GrinPlusPlus());
 }
 
@@ -39,7 +41,7 @@ class GrinPlusPlus extends StatelessWidget {
   }
 }
 
-void loadConfig() async {
+Future loadConfig() async {
   const requiredEnvVariables = const [
     'OWNER_URL',
     'HIDDEN_SEED_WORDS_NUMBER',

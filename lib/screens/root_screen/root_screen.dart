@@ -72,17 +72,21 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
           body: MultiBlocProvider(
             providers: [
               BlocProvider<WalletChoiceBloc>(
-                create: (context) => WalletChoiceBloc(),
+                create: (context) => WalletChoiceBloc(
+                  repository: WalletApi(),
+                ),
               ),
               BlocProvider<CreateWalletBloc>(
                 create: (context) => CreateWalletBloc(
                   rootBloc: _mainBloc,
+                  walletChoiceBloc: BlocProvider.of<WalletChoiceBloc>(context),
                   repository: WalletApi(),
                 ),
               ),
               BlocProvider<RestoreWalletBloc>(
                 create: (context) => RestoreWalletBloc(
                   rootBloc: _mainBloc,
+                  walletChoiceBloc: BlocProvider.of<WalletChoiceBloc>(context),
                   repository: WalletApi(),
                 ),
               ),
@@ -95,6 +99,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
               BlocProvider<SeedScreenBloc>(
                 create: (context) => SeedScreenBloc(
                   rootBloc: _mainBloc,
+                  walletChoiceBloc: BlocProvider.of<WalletChoiceBloc>(context),
                 ),
               ),
             ],

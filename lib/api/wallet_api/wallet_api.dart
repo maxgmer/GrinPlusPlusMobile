@@ -47,4 +47,24 @@ class WalletApi {
       print('Exception occured: $error');
     }
   }
+
+  Future<List<String>> getWallets() async {
+    try {
+      var response = await _dio.get(
+        '/v1/wallet/owner/accounts',
+      );
+      List<String> walletNames = [];
+      if (response.statusCode == 200) {
+        if (response.data != null) {
+          for (var walletName in response.data as List) {
+            walletNames.add(walletName.toString());
+          }
+        }
+      }
+      return walletNames;
+    } catch (error) {
+      print('Exception occured: $error');
+      return [];
+    }
+  }
 }

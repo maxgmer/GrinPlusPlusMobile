@@ -15,11 +15,14 @@ class WalletChoiceScreen extends StatefulWidget {
 
 class _WalletChoiceScreenState extends State<WalletChoiceScreen> {
   RootBloc _rootBloc;
+  WalletChoiceBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     _rootBloc = BlocProvider.of<RootBloc>(context);
+    _bloc = BlocProvider.of<WalletChoiceBloc>(context);
+    _bloc.add(LoadWallets());
   }
 
   @override

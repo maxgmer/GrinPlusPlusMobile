@@ -7,13 +7,19 @@ import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
+import 'package:grin_plus_plus/screens/wallet_choice/bloc/wallet_choice_bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
   final RootBloc rootBloc;
+  final WalletChoiceBloc walletChoiceBloc;
   final WalletApi repository;
 
-  CreateWalletBloc({@required this.rootBloc, @required this.repository});
+  CreateWalletBloc({
+    @required this.rootBloc,
+    @required this.walletChoiceBloc,
+    @required this.repository,
+  });
 
   @override
   CreateWalletState get initialState => CreateWalletState.initial();
@@ -35,11 +41,7 @@ class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
             Screen.showSeedScreen,
             additionalData: createWalletResponse.walletSeed,
           ));
-          yield state.copyWith(
-            walletNameError: null,
-            passwordError: null,
-            newWalletSeed: createWalletResponse.walletSeed,
-          );
+          yield initialState;
         }
       } else {
         yield state.copyWith(

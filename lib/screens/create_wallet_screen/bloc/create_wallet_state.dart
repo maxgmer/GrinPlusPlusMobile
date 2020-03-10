@@ -14,7 +14,7 @@ class CreateWalletState extends Equatable {
   }
 
   CreateWalletState copyWith({String walletNameError, String passwordError,
-    bool walletCreatedSuccessfully, String newWalletSeed}) {
+    bool walletCreatedSuccessfully}) {
     return CreateWalletState(
       walletNameError: walletNameError,
       passwordError: passwordError,

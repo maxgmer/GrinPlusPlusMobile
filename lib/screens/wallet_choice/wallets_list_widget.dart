@@ -7,7 +7,7 @@ import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/strings.dart';
-import 'package:grin_plus_plus/utils.dart';
+import 'package:grin_plus_plus/utils/date_utils.dart';
 import 'package:grin_plus_plus/widgets/fade_in.dart';
 
 class WalletsList extends StatelessWidget {
@@ -22,7 +22,8 @@ class WalletsList extends StatelessWidget {
         child: ListView.builder(
           itemCount: wallets.length,
           shrinkWrap: true,
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.only(left: 30, right: 30,
+              top: 30, bottom: 80),
           itemBuilder: (context, index) {
             Wallet wallet = wallets[index];
             return Padding(

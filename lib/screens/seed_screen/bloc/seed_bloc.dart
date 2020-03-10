@@ -6,14 +6,19 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
 import 'dart:math' as math;
 
 import 'package:grin_plus_plus/strings.dart';
 
 class SeedScreenBloc extends Bloc<SeedScreenEvent, SeedScreenState> {
-  RootBloc rootBloc;
+  final RootBloc rootBloc;
+  final WalletChoiceBloc walletChoiceBloc;
 
-  SeedScreenBloc({@required this.rootBloc});
+  SeedScreenBloc({
+    @required this.rootBloc,
+    @required this.walletChoiceBloc,
+  });
 
   @override
   SeedScreenState get initialState => SeedScreenState.initial();
@@ -43,6 +48,7 @@ class SeedScreenBloc extends Bloc<SeedScreenEvent, SeedScreenState> {
           message: kWalletCreatedString,
           notificationType: Notifications.NotificationType.success,
         ));
+        walletChoiceBloc.add(LoadWallets());
         rootBloc.add(ChangeScreen(Screen.walletChoiceScreen));
         yield initialState;
       } else {
