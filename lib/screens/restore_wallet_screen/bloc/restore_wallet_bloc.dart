@@ -73,7 +73,7 @@ class RestoreWalletBloc extends Bloc<RestoreWalletEvent, RestoreWalletState> {
 
   String _validatePassword(String password) {
     if (password == null || password.length == 0) {
-      return kPasswordCannotBeEmpty;
+      return kPasswordCannotBeEmptyString;
     }
     return null;
   }

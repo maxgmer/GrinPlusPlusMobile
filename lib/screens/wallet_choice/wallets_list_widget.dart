@@ -33,8 +33,10 @@ class WalletsList extends StatelessWidget {
                 padding: const EdgeInsets.all(0),
                 onPressed: () {
                   BlocProvider.of<RootBloc>(context)
-                    ..add(ChangeScreen<Wallet>(
-                        Screen.walletScreen, additionalData: wallet));
+                    ..add(ChangeScreen<String>(
+                      Screen.loginScreen,
+                      additionalData: wallet.name,
+                    ));
                 },
                 color: kColorBackgroundGreyLight,
                 child: Center(

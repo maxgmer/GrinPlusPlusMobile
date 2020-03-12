@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:grin_plus_plus/api/dio_provider.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
 
 class WalletApi {
@@ -46,6 +47,7 @@ class WalletApi {
     } catch (error) {
       print('Exception occured: $error');
     }
+    return null;
   }
 
   Future<List<String>> getWallets() async {
@@ -64,7 +66,27 @@ class WalletApi {
       return walletNames;
     } catch (error) {
       print('Exception occured: $error');
-      return [];
     }
+    return [];
+  }
+
+  Future<LoginResponse> login(String walletName, String password) async {
+    try {
+      var response = await _dio.post(
+        '/v1/wallet/owner/login',
+        options: Options(
+          headers: {
+            'username': walletName,
+            'password': password,
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return LoginResponse.fromJson(response.data);
+      }
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return null;
   }
 }
