@@ -37,6 +37,7 @@ class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
       if (nameError == null && passwordError == null) {
         CreateWalletResponse createWalletResponse = await repository.createWallet(walletName, password);
         if (createWalletResponse != null) {
+          repository.updateWallet(createWalletResponse.sessionToken);
           rootBloc.add(ChangeScreen<String>(
             Screen.showSeedScreen,
             additionalData: createWalletResponse.walletSeed,

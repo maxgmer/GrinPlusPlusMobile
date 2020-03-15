@@ -68,3 +68,5 @@ const String kSeedMessageString = 'Next screen will show a seed phrase you will 
 const String kISavedMySeedString = 'I saved my seed phrase';
 const String kIUnderstandString = 'I understand';
 const String kSaveThisToASafePlaceString = 'Save these words somewhere safe. This is the only way to restore your wallet in the future!';
+const String kWalletNotRefreshedString = 'Wallet data couldn\'t be loaded';
+const String kSomethingWentWrongString = 'Something went wrong';

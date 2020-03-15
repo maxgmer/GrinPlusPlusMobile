@@ -36,7 +36,7 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
             listenerPort: loginResponse.listenerPort,
           ));
           DataUtils.updateWalletLatestLoginTime(event.walletName);
-          rootBloc.add(ChangeScreen(Screen.sendScreen));
+          rootBloc.add(ChangeScreen(Screen.walletScreen));
           yield initialState;
         }
       } else {

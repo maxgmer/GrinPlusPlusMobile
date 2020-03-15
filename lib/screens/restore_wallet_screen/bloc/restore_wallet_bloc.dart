@@ -41,6 +41,7 @@ class RestoreWalletBloc extends Bloc<RestoreWalletEvent, RestoreWalletState> {
           event.seedWords.fold('', ((word1, word2) => '$word1 $word2')).trim(),
         );
         if (response != null) {
+          repository.updateWallet(response.sessionToken);
           NotificationsRepository.showNotification(Notification(
             title: kSuccessString,
             message: kWalletRestoredString,

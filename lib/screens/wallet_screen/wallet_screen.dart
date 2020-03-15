@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/models/wallet.dart';
+import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/funds_block.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/refresh_button.dart';
@@ -24,6 +25,7 @@ class _WalletScreenState extends State<WalletScreen> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<WalletScreenBloc>(context);
+    _bloc.add(RefreshWallet());
   }
 
   @override
