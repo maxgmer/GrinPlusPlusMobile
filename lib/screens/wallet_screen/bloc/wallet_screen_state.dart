@@ -1,10 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/models/output.dart';
 import 'package:grin_plus_plus/models/transaction.dart';
 
 class WalletScreenState extends Equatable {
   final bool refreshing;
-  final List<Output> transactions;
+  final List<Transaction> transactions;
   final double total;
   final double immature;
   final double unconfirmed;

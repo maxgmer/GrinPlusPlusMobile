@@ -8,4 +8,5 @@ abstract class WalletScreenEvent extends Equatable {
 }
 
 class RefreshWallet extends WalletScreenEvent {}
+class Logout extends WalletScreenEvent {}
 class ResetState extends WalletScreenEvent {}

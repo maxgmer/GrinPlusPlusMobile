@@ -27,7 +27,7 @@ class WalletScreenFab extends StatelessWidget {
           subtitle: "Logout from current wallet",
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
-          onTap: () {},
+          onTap: () => bloc.add(Logout()),
         ),
         MenuItem(
           child: Icon(Icons.done_all, color: kColorAlmostWhite),

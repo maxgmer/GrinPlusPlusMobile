@@ -9,3 +9,4 @@ const Color kColorAlmostWhite = const Color.fromRGBO(240, 240, 240, 1.0);
 const Color kColorErrorRed = const Color.fromRGBO(239, 83, 80, 1.0);
 const Color kColorPinkRed = const Color.fromRGBO(232, 119, 119, 1.0);
 const Color kColorGreen = const Color.fromRGBO(147, 192, 95, 1.0);
+const Color kColorYellow = const Color.fromRGBO(255, 230, 128, 1.0);

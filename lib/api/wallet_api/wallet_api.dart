@@ -92,6 +92,25 @@ class WalletApi {
     return null;
   }
 
+  Future<bool> logout(String sessionToken) async {
+    try {
+      var response = await _dio.post(
+        '/v1/wallet/owner/logout',
+        options: Options(
+          headers: {
+            'session_token': sessionToken,
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return false;
+  }
+
   Future<bool> updateWallet(String sessionToken, {bool fromGenesis}) async {
     try {
       var queryParameters;

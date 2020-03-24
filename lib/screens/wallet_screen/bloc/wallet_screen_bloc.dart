@@ -6,6 +6,7 @@ import 'package:grin_plus_plus/models/wallet_info.dart';
 import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
 import 'package:grin_plus_plus/repositories/session_repository.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_event.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_state.dart';
 import 'package:grin_plus_plus/strings.dart';
@@ -27,6 +28,12 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
     if (event is ResetState) {
       yield initialState;
     }
+    if (event is Logout) {
+      Session session = SessionRepository.currentSession;
+      await repository.logout(session.sessionToken);
+      rootBloc.add(ChangeScreen(Screen.walletChoiceScreen));
+      yield initialState;
+    }
     if (event is RefreshWallet) {
       if (state.refreshing) return;
 
@@ -35,6 +42,7 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
       await repository.updateWallet(session.sessionToken);
       WalletInfo walletInfo = await repository.getWalletSummary(session.sessionToken);
       if (walletInfo != null) {
+        walletInfo.transactions?.sort();
         yield state.copyWith(
           refreshing: false,
           transactions: walletInfo.transactions,

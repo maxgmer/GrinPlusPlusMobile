@@ -5,7 +5,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'transaction.g.dart';
 
 @JsonSerializable()
-class Transaction extends Equatable {
+class Transaction extends Equatable implements Comparable<Transaction> {
   @JsonKey(name: 'amount_credited')
   final int amountCredited;
   @JsonKey(name: 'amount_debited')
@@ -35,6 +35,10 @@ class Transaction extends Equatable {
     this.type,
     this.outputs,
   });
+
+  double get amountCreditedDouble => amountCredited / 1000000000;
+  double get amountDebitedDouble => amountDebited / 1000000000;
+  DateTime get creationDateTime => DateTime.fromMillisecondsSinceEpoch(creationTime * 1000);
 
   TransactionType get typeEnum {
     switch (type) {
@@ -72,6 +76,9 @@ class Transaction extends Equatable {
         ?.map((transactionJson) => transactionJson == null ? null : Transaction.fromJson(transactionJson as Map<String, dynamic>))
         ?.toList();
   }
+
+  @override
+  int compareTo(Transaction other) => creationTime.compareTo(other.creationTime);
 }
 
 enum TransactionType {

@@ -57,10 +57,4 @@ class _WalletScreenState extends State<WalletScreen> {
       floatingActionButton: WalletScreenFab(_bloc),
     );
   }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.close();
-  }
 }
