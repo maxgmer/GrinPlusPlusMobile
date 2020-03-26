@@ -1,5 +1,7 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/models/output.dart';
+import 'package:grin_plus_plus/models/commitment.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction.g.dart';
@@ -21,7 +23,7 @@ class Transaction extends Equatable implements Comparable<Transaction> {
   final int fee;
   final int id;
   final String type;
-  final List<Output> outputs;
+  final List<Commitment> outputs;
 
   Transaction({
     this.amountCredited,
@@ -36,8 +38,8 @@ class Transaction extends Equatable implements Comparable<Transaction> {
     this.outputs,
   });
 
-  double get amountCreditedDouble => amountCredited / 1000000000;
-  double get amountDebitedDouble => amountDebited / 1000000000;
+  double get amountCreditedDouble => amountCredited / pow(10, 9);
+  double get amountDebitedDouble => amountDebited / pow(10, 9);
   DateTime get creationDateTime => DateTime.fromMillisecondsSinceEpoch(creationTime * 1000);
 
   TransactionType get typeEnum {

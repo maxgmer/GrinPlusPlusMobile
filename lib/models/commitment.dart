@@ -1,10 +1,10 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'output.g.dart';
+part 'commitment.g.dart';
 
 @JsonSerializable()
-class Output extends Equatable {
+class Commitment extends Equatable {
   final int amount;
   @JsonKey(name: 'block_height')
   final int blockHeight;
@@ -18,7 +18,7 @@ class Output extends Equatable {
   @JsonKey(name: 'mmr_index')
   final int mmrIndex;
 
-  Output({
+  Commitment({
     this.amount,
     this.blockHeight,
     this.keychainPath,
@@ -29,14 +29,14 @@ class Output extends Equatable {
     this.mmrIndex,
   });
 
-  OutputStatus get statusEnum {
+  CommitmentStatus get statusEnum {
     switch (status) {
-      case 'Spendable': return OutputStatus.spendable;
-      case 'Immature': return OutputStatus.immature;
-      case 'No Confirmations': return OutputStatus.noConfirmations;
-      case 'Spent': return OutputStatus.spent;
-      case 'Locked': return OutputStatus.locked;
-      case 'Canceled': return OutputStatus.cancelled;
+      case 'Spendable': return CommitmentStatus.spendable;
+      case 'Immature': return CommitmentStatus.immature;
+      case 'No Confirmations': return CommitmentStatus.noConfirmations;
+      case 'Spent': return CommitmentStatus.spent;
+      case 'Locked': return CommitmentStatus.locked;
+      case 'Canceled': return CommitmentStatus.cancelled;
     }
     return null;
   }
@@ -53,18 +53,18 @@ class Output extends Equatable {
     mmrIndex,
   ];
 
-  factory Output.fromJson(Map<String, dynamic> json) => _$OutputFromJson(json);
+  factory Commitment.fromJson(Map<String, dynamic> json) => _$CommitmentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$OutputToJson(this);
+  Map<String, dynamic> toJson() => _$CommitmentToJson(this);
 
-  static List<Output> fromJsonToList(dynamic json) {
+  static List<Commitment> fromJsonToList(dynamic json) {
     return (json as List)
-        ?.map((outputJson) => outputJson == null ? null : Output.fromJson(outputJson as Map<String, dynamic>))
+        ?.map((commitmentJson) => commitmentJson == null ? null : Commitment.fromJson(commitmentJson as Map<String, dynamic>))
         ?.toList();
   }
 }
 
-enum OutputStatus {
+enum CommitmentStatus {
   spendable,
   immature,
   noConfirmations,

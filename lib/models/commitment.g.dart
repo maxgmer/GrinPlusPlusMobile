@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'output.dart';
+part of 'commitment.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Output _$OutputFromJson(Map<String, dynamic> json) {
-  return Output(
+Commitment _$CommitmentFromJson(Map<String, dynamic> json) {
+  return Commitment(
     amount: json['amount'] as int,
     blockHeight: json['block_height'] as int,
     keychainPath: json['keychain_path'] as String,
@@ -19,7 +19,8 @@ Output _$OutputFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OutputToJson(Output instance) => <String, dynamic>{
+Map<String, dynamic> _$CommitmentToJson(Commitment instance) =>
+    <String, dynamic>{
       'amount': instance.amount,
       'block_height': instance.blockHeight,
       'keychain_path': instance.keychainPath,

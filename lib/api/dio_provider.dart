@@ -5,6 +5,7 @@ import 'package:grin_plus_plus/strings.dart';
 
 class DioProvider {
   static Dio dio;
+  static List<String> uriPathsToSkipErrorNotifications = [];
 
   static void _init() {
     dio = Dio();
@@ -32,11 +33,13 @@ class DioProvider {
 class ErrorInterceptor extends Interceptor {
   @override
   Future onError(DioError error) {
-    NotificationsRepository.showNotification(Notification(
-      title: kErrorString,
-      message: error.response.data.toString() ?? error.message,
-      notificationType: NotificationType.failure,
-    ));
+    if (!DioProvider.uriPathsToSkipErrorNotifications.contains(error.request.path)) {
+      NotificationsRepository.showNotification(Notification(
+        title: kErrorString,
+        message: error.response.data.toString() ?? error.message,
+        notificationType: NotificationType.failure,
+      ));
+    }
     return Future(() => error);
   }
 }

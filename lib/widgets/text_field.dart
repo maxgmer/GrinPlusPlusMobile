@@ -8,6 +8,7 @@ class BorderedTextField extends StatelessWidget {
   final bool obscureText;
   final String labelText;
   final bool enabled;
+  final TextInputType keyboardType;
 
   BorderedTextField({
     this.controller,
@@ -16,6 +17,7 @@ class BorderedTextField extends StatelessWidget {
     this.obscureText = false,
     this.labelText,
     this.enabled = true,
+    this.keyboardType = TextInputType.text,
   });
 
   @override
@@ -58,6 +60,7 @@ class BorderedTextField extends StatelessWidget {
           color: labelColor,
         ),
       ),
+      keyboardType: keyboardType,
       controller: controller,
       textInputAction: TextInputAction.done,
       obscureText: obscureText,

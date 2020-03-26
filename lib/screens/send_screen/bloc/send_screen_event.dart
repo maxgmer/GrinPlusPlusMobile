@@ -16,3 +16,11 @@ class ChangeTransportType extends SendScreenEvent {
   @override
   List<Object> get props => [transportType];
 }
+class AmountChanged extends SendScreenEvent {
+  final double amount;
+
+  AmountChanged(this.amount);
+
+  @override
+  List<Object> get props => [amount];
+}

@@ -1,13 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:grin_plus_plus/api/dio_provider.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
-import 'package:grin_plus_plus/models/output.dart';
-import 'package:grin_plus_plus/models/wallet_info.dart';
+import 'package:grin_plus_plus/models/commitment.dart';
+import 'package:grin_plus_plus/models/wallet_info.dart'
+;import 'package:json_rpc_2/json_rpc_2.dart' as JsonRpc;
 
 class WalletApi {
   final Dio _dio = DioProvider.get();
+
+  WalletApi() {
+    DioProvider.uriPathsToSkipErrorNotifications
+        .add('/v1/wallet/owner/estimate_fee');
+  }
 
   Future<CreateWalletResponse> createWallet(String username, String password) async {
     try {
@@ -137,7 +144,7 @@ class WalletApi {
     return false;
   }
 
-  Future<List<Output>> getOutputs(String sessionToken) async {
+  Future<List<Commitment>> getOutputs(String sessionToken) async {
     try {
       var response = await _dio.get(
         '/v1/wallet/owner/retrieve_outputs',
@@ -152,7 +159,7 @@ class WalletApi {
         ),
       );
       if (response.statusCode == 200) {
-        return Output.fromJsonToList(response.data['outputs']);
+        return Commitment.fromJsonToList(response.data['outputs']);
       }
     } catch (error) {
       print('Exception occured: $error');
@@ -178,4 +185,38 @@ class WalletApi {
     }
     return null;
   }
+
+  Future<EstimateFeeResponse> estimateFee(String sessionToken, int amount, String strategy, List<Commitment> inputs) async {
+    try {
+      var response = await _dio.post(
+        '/v1/wallet/owner/estimate_fee',
+        data: {
+          'amount': amount,
+          'fee_base': 1000000,
+          'selection_strategy': {
+            'strategy': strategy,
+            'inputs': inputs,
+          },
+        },
+        options: Options(
+          headers: {
+            'session_token': sessionToken,
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return EstimateFeeResponse.fromJson(response.data);
+      }
+    } on DioError catch (error) {
+      print('Exception occured: $error');
+      return EstimateFeeResponse(errorMessage: error.response.data);
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return null;
+  }
+
+  //Future send(String sessionToken, int amount, String strategy,) async {
+
+  //}
 }

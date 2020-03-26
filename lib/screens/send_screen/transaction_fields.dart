@@ -16,7 +16,6 @@ class TransactionFields extends StatefulWidget {
 class _TransactionFieldsState extends State<TransactionFields> {
   SendScreenBloc _bloc;
   TextEditingController _amountController;
-  TextEditingController _feeController;
   TextEditingController _messageController;
   TextEditingController _addressController;
 
@@ -24,6 +23,13 @@ class _TransactionFieldsState extends State<TransactionFields> {
   void initState() {
     super.initState();
     _bloc = BlocProvider.of<SendScreenBloc>(context);
+    _amountController = TextEditingController();
+    _messageController = TextEditingController();
+    _addressController = TextEditingController();
+    _amountController.addListener(() {
+      if (_amountController.text != null && _amountController.text.isNotEmpty)
+      _bloc.add(AmountChanged(double.tryParse(_amountController.text)));
+    });
   }
 
   @override
@@ -32,30 +38,20 @@ class _TransactionFieldsState extends State<TransactionFields> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 12),
-          child: Row(
-            children: <Widget>[
-              Flexible(
-                flex: 2,
-                child: Padding(
-                  padding: const EdgeInsets.only(right: 12),
-                  child: BorderedTextField(
-                    labelText: kAmountString,
-                    controller: _amountController,
-                  ),
-                ),
-              ),
-              Flexible(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12),
-                  child: BorderedTextField(
-                    labelText: kFeeString,
-                    controller: _feeController,
-                    enabled: false,
-                  ),
-                ),
-              ),
-            ],
+          child: BlocBuilder<SendScreenBloc, SendScreenState>(
+            builder: (context, state) => BorderedTextField(
+              boxColor: state.amountError == null || state.amountError.isEmpty
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelColor: state.amountError == null || state.amountError.isEmpty
+                  ? kColorAlmostWhite
+                  : kColorErrorRed,
+              labelText: state.amountError == null || state.amountError.isEmpty
+                  ? kAmountString
+                  : state.amountError,
+              controller: _amountController,
+              keyboardType: TextInputType.numberWithOptions(),
+            ),
           ),
         ),
         Padding(
@@ -80,6 +76,19 @@ class _TransactionFieldsState extends State<TransactionFields> {
                 controller: _addressController,
               );
             }
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 16),
+          child: BlocBuilder<SendScreenBloc, SendScreenState>(
+            builder: (context, state) => Text(
+              'Fee to pay: ${state?.estimatedFee ?? 0.toStringAsFixed(9)}',
+              style: TextStyle(
+                color: kColorAlmostWhite,
+                fontWeight: FontWeight.w300,
+                fontSize: 15,
+              ),
+            ),
           ),
         ),
         Padding(

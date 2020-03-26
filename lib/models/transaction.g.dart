@@ -19,7 +19,7 @@ Transaction _$TransactionFromJson(Map<String, dynamic> json) {
     type: json['type'] as String,
     outputs: (json['outputs'] as List)
         ?.map((e) =>
-            e == null ? null : Output.fromJson(e as Map<String, dynamic>))
+            e == null ? null : Commitment.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

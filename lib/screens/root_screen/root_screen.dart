@@ -99,7 +99,10 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 ),
               ),
               BlocProvider<SendScreenBloc>(
-                create: (context) => SendScreenBloc(),
+                create: (context) => SendScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
               ),
               BlocProvider<SeedScreenBloc>(
                 create: (context) => SeedScreenBloc(
