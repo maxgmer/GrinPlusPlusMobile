@@ -60,6 +60,7 @@ const String kAmountString = 'Amount';
 const String kFeeString = 'Fee';
 const String kMessageString = 'Message';
 const String kFilenameString = 'Transaction file name';
+const String kFeeToPayString = 'Fee to pay';
 const String kAddressString = 'Address';
 const String kErrorString = 'Error';
 const String kCouldNotCreateWalletString = 'Wallet creation failed';

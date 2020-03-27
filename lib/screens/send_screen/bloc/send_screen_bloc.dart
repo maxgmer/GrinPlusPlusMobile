@@ -35,7 +35,10 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
       );
       if (response.errorMessage == null) {
         if (event.amount == null || event.amount == 0) {
-          yield state.copyWith(amountError: 'Amount cannot be 0');
+          yield state.copyWith(
+            amountError: 'Amount cannot be 0',
+            estimatedFee: 0,
+          );
         } else {
           yield state.copyWith(
             amountError: '',
@@ -43,7 +46,10 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
           );
         }
       } else {
-        yield state.copyWith(amountError: response.errorMessage);
+        yield state.copyWith(
+          amountError: response.errorMessage,
+          estimatedFee: 0,
+        );
       }
     }
   }

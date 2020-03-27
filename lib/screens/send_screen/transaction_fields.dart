@@ -35,9 +35,23 @@ class _TransactionFieldsState extends State<TransactionFields> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24, top: 24, bottom: 12),
+          padding: const EdgeInsets.only(left: 24, top: 24, bottom: 4),
+          child: BlocBuilder<SendScreenBloc, SendScreenState>(
+            builder: (context, state) => Text(
+              '$kFeeToPayString: ${state?.estimatedFee?.toStringAsFixed(9) ?? 0.toStringAsFixed(9)}',
+              style: TextStyle(
+                color: kColorAlmostWhite,
+                fontWeight: FontWeight.w300,
+                fontSize: 15,
+              ),
+            ),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
           child: BlocBuilder<SendScreenBloc, SendScreenState>(
             builder: (context, state) => BorderedTextField(
               boxColor: state.amountError == null || state.amountError.isEmpty
@@ -78,29 +92,18 @@ class _TransactionFieldsState extends State<TransactionFields> {
             }
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: BlocBuilder<SendScreenBloc, SendScreenState>(
-            builder: (context, state) => Text(
-              'Fee to pay: ${state?.estimatedFee ?? 0.toStringAsFixed(9)}',
-              style: TextStyle(
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 90),
+            child: IconButton(
+              padding: const EdgeInsets.all(24),
+              onPressed: () {},
+              tooltip: kSendString,
+              icon: Icon(
+                Icons.send,
                 color: kColorAlmostWhite,
-                fontWeight: FontWeight.w300,
-                fontSize: 15,
+                size: 28,
               ),
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(bottom: 90),
-          child: IconButton(
-            padding: const EdgeInsets.all(24),
-            onPressed: () {},
-            tooltip: kSendString,
-            icon: Icon(
-              Icons.send,
-              color: kColorAlmostWhite,
-              size: 28,
             ),
           ),
         ),

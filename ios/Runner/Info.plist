@@ -41,5 +41,9 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>Grin++ needs "write" access to storage to save transaction files.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Grin++ needs "read" access to storage to read transaction files.</string>
 </dict>
 </plist>
