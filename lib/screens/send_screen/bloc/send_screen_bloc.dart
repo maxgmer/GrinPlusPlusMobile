@@ -25,6 +25,17 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
     if (event is ChangeTransportType) {
       yield state.copyWith(transportType: event.transportType);
     }
+    if (event is Send) {
+      Session session = SessionRepository.currentSession;
+      await repository.send(
+        session.sessionToken,
+        event.amount * pow(10, 9),
+        SelectionStrategy.smallest,
+        event.,
+        message,
+        grinJoin,
+      );
+    }
     if (event is AmountChanged) {
       Session session = SessionRepository.currentSession;
       EstimateFeeResponse response = await repository.estimateFee(

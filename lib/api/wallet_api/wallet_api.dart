@@ -9,7 +9,7 @@ import 'package:grin_plus_plus/models/wallet_info.dart'
 ;import 'package:json_rpc_2/json_rpc_2.dart' as JsonRpc;
 
 class WalletApi {
-  final Dio _dio = DioProvider.get();
+  final Dio _dio = DioProvider.getDio();
 
   WalletApi() {
     DioProvider.uriPathsToSkipErrorNotifications
@@ -215,8 +215,54 @@ class WalletApi {
     }
     return null;
   }
+  reqJSON['session_token'] = global.session_token;
+  reqJSON['amount'] = amount;
+  reqJSON['fee_base'] = 1000000;
+  reqJSON['selection_strategy'] = {
+  strategy: strategy,
+  inputs: inputs
+  };
 
-  //Future send(String sessionToken, int amount, String strategy,) async {
+  reqJSON['address'] = address;
 
-  //}
+  if (message != null && message.length > 0) {
+  reqJSON['message'] = message;
+  }
+
+  var postJSON = new Object();
+  if (grinjoin == true) {
+  postJSON['method'] = 'JOIN';
+  postJSON['grinjoin_address'] = GRINJOIN_ADDRESS;
+  } else {
+  postJSON['method'] = 'STEM';
+  }
+  reqJSON["post_tx"] = postJSON;
+
+  RPCClient.call('send', reqJSON, function (response, error) {
+    if (error != null) {
+      callback({
+        success: false,
+        data: error
+      });
+    } else if (response.error != null) {
+      callback({
+        success: false,
+        message: response.error.message,
+        data: response.error.data
+      });
+    } else {
+      callback({
+        success: true,
+        data: response.result
+      });
+    }
+  });
+  Future send(String sessionToken, int amount, String strategy,
+      String address, String message, bool grinJoin) async {
+    try {
+      JsonRpc.Client().sendRequest(method)
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+  }
 }

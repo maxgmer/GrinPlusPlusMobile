@@ -97,7 +97,12 @@ class _TransactionFieldsState extends State<TransactionFields> {
             padding: const EdgeInsets.only(bottom: 90),
             child: IconButton(
               padding: const EdgeInsets.all(24),
-              onPressed: () {},
+              onPressed: () => _bloc.add(Send(
+                amount: double.tryParse(_amountController.text),
+                grinJoin: false,
+                address: _getAddressFromController(),
+                message: _messageController.text,
+              )),
               tooltip: kSendString,
               icon: Icon(
                 Icons.send,
@@ -109,6 +114,10 @@ class _TransactionFieldsState extends State<TransactionFields> {
         ),
       ],
     );
+  }
+
+  String _getAddressFromController() {
+
   }
 
   @override
