@@ -124,8 +124,8 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   case Screen.createWalletScreen: return CreateWalletScreen();
                   case Screen.restoreWalletScreen: return RestoreWalletScreen();
                   case Screen.showSeedScreen: return SeedScreen(state.screenData[Screen.showSeedScreen]);
-                  case Screen.walletScreen: return WalletScreen(state.screenData[Screen.walletScreen]);
-                  case Screen.sendScreen: return SendScreen(state.screenData[Screen.sendScreen]);
+                  case Screen.walletScreen: return WalletScreen();
+                  case Screen.sendScreen: return SendScreen();
                   case Screen.loginScreen: return LoginScreen(state.screenData[Screen.loginScreen]);
                 }
                 throw UnimplementedError(kScreenNotImplementedString);

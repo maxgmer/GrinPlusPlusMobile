@@ -40,7 +40,7 @@ class Transaction extends Equatable implements Comparable<Transaction> {
 
   double get amountCreditedDouble => amountCredited / pow(10, 9);
   double get amountDebitedDouble => amountDebited / pow(10, 9);
-  DateTime get creationDateTime => DateTime.fromMillisecondsSinceEpoch(creationTime * 1000);
+  DateTime get creationDateTimeLocal => DateTime.fromMillisecondsSinceEpoch(creationTime * 1000).toLocal();
 
   TransactionType get typeEnum {
     switch (type) {

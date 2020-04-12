@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class TransactionFileSavedScreen extends StatelessWidget {
@@ -29,7 +31,10 @@ class TransactionFileSavedScreen extends StatelessWidget {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
-        onPressed: () => bloc.add(AcknowledgeTxFilePath()),
+        onPressed: () {
+          BlocProvider.of<WalletScreenBloc>(context).add(RefreshWallet());
+          bloc.add(AcknowledgeTxFilePath());
+        },
         child: Icon(
           Icons.done,
           color: Colors.black,

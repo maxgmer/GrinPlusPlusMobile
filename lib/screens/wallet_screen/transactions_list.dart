@@ -63,7 +63,7 @@ class TransactionTile extends StatelessWidget {
               ),
             ),
             Text(
-              getSmartDateString(transaction.creationDateTime, withTime: true),
+              getSmartDateString(transaction.creationDateTimeLocal, withTime: true),
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

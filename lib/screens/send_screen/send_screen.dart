@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
@@ -12,10 +11,6 @@ import 'package:grin_plus_plus/screens/wallet_screen/funds_block.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class SendScreen extends StatefulWidget {
-  final Wallet wallet;
-
-  SendScreen(this.wallet);
-
   @override
   State<StatefulWidget> createState() => _SendScreenState();
 }
@@ -71,11 +66,5 @@ class _SendScreenState extends State<SendScreen> {
         );
       }
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _bloc.close();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/wallet_screen_bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/funds_block.dart';
@@ -10,10 +9,6 @@ import 'package:grin_plus_plus/screens/wallet_screen/transactions_list.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/wallet_screen_fab.dart';
 
 class WalletScreen extends StatefulWidget {
-  final Wallet wallet;
-
-  WalletScreen(this.wallet);
-
   @override
   State<StatefulWidget> createState() => _WalletScreenState();
 }

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
+import 'package:grin_plus_plus/models/transaction.dart';
 import 'package:grin_plus_plus/models/wallet_info.dart';
 import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
 import 'package:grin_plus_plus/repositories/session_repository.dart';
@@ -46,7 +47,8 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
         walletInfo.transactions?.sort();
         yield state.copyWith(
           refreshing: false,
-          transactions: walletInfo.transactions,
+          transactions: walletInfo.transactions
+            ..removeWhere((transaction) => transaction.typeEnum == TransactionType.cancelled),
           total: walletInfo.total / pow(10, 9),
           immature: walletInfo.amountImmature / pow(10, 9),
           unconfirmed: walletInfo.amountAwaitingConfirmation / pow(10, 9),
