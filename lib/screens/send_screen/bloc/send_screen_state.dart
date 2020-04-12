@@ -6,17 +6,20 @@ class SendScreenState extends Equatable {
   final String amountError;
   final double estimatedFee;
   final String transactionFilePath;
+  final bool grinJoin;
 
   SendScreenState({
     this.transportType,
     this.amountError,
     this.estimatedFee,
     this.transactionFilePath,
+    this.grinJoin,
   });
 
   factory SendScreenState.initial() {
     return SendScreenState(
       transportType: TransportType.file,
+      grinJoin: false,
     );
   }
 
@@ -25,12 +28,14 @@ class SendScreenState extends Equatable {
     String amountError,
     double estimatedFee,
     String transactionFilePath,
+    bool grinJoin,
   }) {
     return SendScreenState(
       transportType: transportType ?? this.transportType,
       amountError: amountError ?? this.amountError,
       estimatedFee: estimatedFee ?? this.estimatedFee,
       transactionFilePath: transactionFilePath ?? this.transactionFilePath,
+      grinJoin: grinJoin ?? this.grinJoin,
     );
   }
 
@@ -40,5 +45,6 @@ class SendScreenState extends Equatable {
     amountError,
     estimatedFee,
     transactionFilePath,
+    grinJoin,
   ];
 }

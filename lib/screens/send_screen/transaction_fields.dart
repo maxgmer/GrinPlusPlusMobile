@@ -34,13 +34,13 @@ class _TransactionFieldsState extends State<TransactionFields> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(left: 24, top: 24, bottom: 4),
-          child: BlocBuilder<SendScreenBloc, SendScreenState>(
-            builder: (context, state) => Text(
+    return BlocBuilder<SendScreenBloc, SendScreenState>(
+      builder: (context, state) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.only(left: 24, top: 24, bottom: 4),
+            child: Text(
               '$kFeeToPayString: ${state?.estimatedFee?.toStringAsFixed(9) ?? 0.toStringAsFixed(9)}',
               style: TextStyle(
                 color: kColorAlmostWhite,
@@ -49,11 +49,9 @@ class _TransactionFieldsState extends State<TransactionFields> {
               ),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
-          child: BlocBuilder<SendScreenBloc, SendScreenState>(
-            builder: (context, state) => BorderedTextField(
+          Padding(
+            padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
+            child: BorderedTextField(
               boxColor: state.amountError == null || state.amountError.isEmpty
                   ? kColorAlmostWhite
                   : kColorErrorRed,
@@ -67,53 +65,76 @@ class _TransactionFieldsState extends State<TransactionFields> {
               keyboardType: TextInputType.numberWithOptions(),
             ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: BorderedTextField(
-            labelText: kMessageString,
-            controller: _messageController,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            child: BorderedTextField(
+              labelText: kMessageString,
+              controller: _messageController,
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
-          child: BlocBuilder<SendScreenBloc, SendScreenState>(
-            builder: (context, state) {
-              String label;
-              if (state.transportType == TransportType.file) {
-                label = kFilenameString;
-              } else {
-                label = kAddressString;
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+            child: Builder(
+              builder: (context) {
+                String label;
+                if (state.transportType == TransportType.file) {
+                  label = kFilenameString;
+                } else {
+                  label = kAddressString;
+                }
+                return BorderedTextField(
+                  labelText: label,
+                  controller: _addressController,
+                );
               }
-              return BorderedTextField(
-                labelText: label,
-                controller: _addressController,
-              );
-            }
+            ),
           ),
-        ),
-        Center(
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: 90),
-            child: IconButton(
-              padding: const EdgeInsets.all(24),
-              onPressed: () => _bloc.add(Send(
-                amount: double.tryParse(_amountController.text.replaceAll(',', '.')),
-                //TODO: add grinjoin
-                grinJoin: false,
-                address: _addressController.text,
-                message: _messageController.text,
-              )),
-              tooltip: kSendString,
-              icon: Icon(
-                Icons.send,
-                color: kColorAlmostWhite,
-                size: 28,
+          Tooltip(
+            showDuration: Duration(seconds: 5),
+            waitDuration: Duration(milliseconds: 1),
+            message: kGrinJoinInfoString,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Checkbox(
+                  value: state.grinJoin,
+                  onChanged: (grinJoin) => _bloc.add(GrinJoin(grinJoin)),
+                  activeColor: kColorAlmostWhite,
+                  checkColor: Colors.black,
+                  materialTapTargetSize: MaterialTapTargetSize.padded,
+                ),
+                Text(
+                  kGrinJoinString,
+                  style: TextStyle(
+                    color: kColorAlmostWhite,
+                    fontWeight: FontWeight.w300,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 120),
+              child: IconButton(
+                padding: const EdgeInsets.all(24),
+                onPressed: () => _bloc.add(Send(
+                  amount: double.tryParse(_amountController.text.replaceAll(',', '.')),
+                  address: _addressController.text,
+                  message: _messageController.text,
+                )),
+                tooltip: kSendString,
+                icon: Icon(
+                  Icons.send,
+                  color: kColorAlmostWhite,
+                  size: 28,
+                ),
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

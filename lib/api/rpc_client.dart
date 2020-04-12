@@ -9,7 +9,12 @@ class RpcClient {
     _dio = Dio();
     _dio.options.baseUrl = DotEnv().env['RPC_OWNER_URL'];
     _dio.options.validateStatus = (status) => status == 200;
-
+    _dio.interceptors.add(LogInterceptor(
+      requestHeader: true,
+      requestBody: true,
+      responseHeader: true,
+      responseBody: true,
+    ));
   }
 
   Future call(String method, Map<String, dynamic> params) async {
