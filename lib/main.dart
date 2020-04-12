@@ -45,6 +45,9 @@ Future loadConfig() async {
   const requiredEnvVariables = const [
     'OWNER_URL',
     'HIDDEN_SEED_WORDS_NUMBER',
+    'GRINJOIN_ADDRESS',
+    'RPC_OWNER_URL',
+    'TRANSACTIONS_FOLDER',
   ];
 
   await DotEnv().load('.env');

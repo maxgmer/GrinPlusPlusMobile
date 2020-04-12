@@ -8,6 +8,7 @@ abstract class SendScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AcknowledgeTxFilePath extends SendScreenEvent {}
 class Send extends SendScreenEvent {
   final double amount;
   final bool grinJoin;
@@ -22,7 +23,7 @@ class Send extends SendScreenEvent {
   });
 
   @override
-  List<Object> get props => [amount, grinJoin];
+  List<Object> get props => [amount, grinJoin, address, message];
 }
 class ChangeTransportType extends SendScreenEvent {
   final TransportType transportType;

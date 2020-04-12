@@ -1,25 +1,28 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:grin_plus_plus/api/dio_provider.dart';
+import 'package:grin_plus_plus/api/rpc_client.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
-import 'package:grin_plus_plus/models/commitment.dart';
-import 'package:grin_plus_plus/models/wallet_info.dart'
-;import 'package:json_rpc_2/json_rpc_2.dart' as JsonRpc;
+import 'package:grin_plus_plus/api/wallet_api/responses/send_response.dart';
+import 'package:grin_plus_plus/models/input_output.dart';
+import 'package:grin_plus_plus/models/wallet_info.dart';
 
 class WalletApi {
-  final Dio _dio = DioProvider.getDio();
+  final Dio _dio = NetworkUtilProvider.getDio();
+  final RpcClient _rpcClient = NetworkUtilProvider.getRpc();
 
   WalletApi() {
-    DioProvider.uriPathsToSkipErrorNotifications
-        .add('/v1/wallet/owner/estimate_fee');
+    NetworkUtilProvider.uriPathsToSkipErrorNotifications
+        .add('/wallet/owner/estimate_fee');
   }
 
   Future<CreateWalletResponse> createWallet(String username, String password) async {
     try {
       var response = await _dio.post(
-        '/v1/wallet/owner/create_wallet',
+        '/wallet/owner/create_wallet',
         options: Options(
           headers: {
             'username': username,
@@ -39,7 +42,7 @@ class WalletApi {
   Future restoreWallet(String username, String password, String seed) async {
     try {
       var response = await _dio.post(
-        '/v1/wallet/owner/restore_wallet',
+        '/wallet/owner/restore_wallet',
         options: Options(
           headers: {
             'username': username,
@@ -62,7 +65,7 @@ class WalletApi {
   Future<List<String>> getWallets() async {
     try {
       var response = await _dio.get(
-        '/v1/wallet/owner/accounts',
+        '/wallet/owner/accounts',
       );
       List<String> walletNames = [];
       if (response.statusCode == 200) {
@@ -82,7 +85,7 @@ class WalletApi {
   Future<LoginResponse> login(String walletName, String password) async {
     try {
       var response = await _dio.post(
-        '/v1/wallet/owner/login',
+        '/wallet/owner/login',
         options: Options(
           headers: {
             'username': walletName,
@@ -102,7 +105,7 @@ class WalletApi {
   Future<bool> logout(String sessionToken) async {
     try {
       var response = await _dio.post(
-        '/v1/wallet/owner/logout',
+        '/wallet/owner/logout',
         options: Options(
           headers: {
             'session_token': sessionToken,
@@ -127,7 +130,7 @@ class WalletApi {
         };
       }
       var response = await _dio.post(
-        '/v1/wallet/owner/update_wallet',
+        '/wallet/owner/update_wallet',
         queryParameters: queryParameters,
         options: Options(
           headers: {
@@ -144,10 +147,10 @@ class WalletApi {
     return false;
   }
 
-  Future<List<Commitment>> getOutputs(String sessionToken) async {
+  Future<List<InputOutput>> getOutputs(String sessionToken) async {
     try {
       var response = await _dio.get(
-        '/v1/wallet/owner/retrieve_outputs',
+        '/wallet/owner/retrieve_outputs',
         queryParameters: {
           'show_spent': true,
           'show_canceled': true,
@@ -159,7 +162,7 @@ class WalletApi {
         ),
       );
       if (response.statusCode == 200) {
-        return Commitment.fromJsonToList(response.data['outputs']);
+        return InputOutput.fromJsonToList(response.data['outputs']);
       }
     } catch (error) {
       print('Exception occured: $error');
@@ -170,7 +173,7 @@ class WalletApi {
   Future<WalletInfo> getWalletSummary(String sessionToken) async {
     try {
       var response = await _dio.get(
-        '/v1/wallet/owner/retrieve_summary_info',
+        '/wallet/owner/retrieve_summary_info',
         options: Options(
           headers: {
             'session_token': sessionToken,
@@ -186,10 +189,10 @@ class WalletApi {
     return null;
   }
 
-  Future<EstimateFeeResponse> estimateFee(String sessionToken, int amount, String strategy, List<Commitment> inputs) async {
+  Future<EstimateFeeResponse> estimateFee(String sessionToken, int amount, String strategy, List<InputOutput> inputs) async {
     try {
       var response = await _dio.post(
-        '/v1/wallet/owner/estimate_fee',
+        '/wallet/owner/estimate_fee',
         data: {
           'amount': amount,
           'fee_base': 1000000,
@@ -215,54 +218,46 @@ class WalletApi {
     }
     return null;
   }
-  reqJSON['session_token'] = global.session_token;
-  reqJSON['amount'] = amount;
-  reqJSON['fee_base'] = 1000000;
-  reqJSON['selection_strategy'] = {
-  strategy: strategy,
-  inputs: inputs
-  };
 
-  reqJSON['address'] = address;
-
-  if (message != null && message.length > 0) {
-  reqJSON['message'] = message;
-  }
-
-  var postJSON = new Object();
-  if (grinjoin == true) {
-  postJSON['method'] = 'JOIN';
-  postJSON['grinjoin_address'] = GRINJOIN_ADDRESS;
-  } else {
-  postJSON['method'] = 'STEM';
-  }
-  reqJSON["post_tx"] = postJSON;
-
-  RPCClient.call('send', reqJSON, function (response, error) {
-    if (error != null) {
-      callback({
-        success: false,
-        data: error
-      });
-    } else if (response.error != null) {
-      callback({
-        success: false,
-        message: response.error.message,
-        data: response.error.data
-      });
-    } else {
-      callback({
-        success: true,
-        data: response.result
-      });
-    }
-  });
-  Future send(String sessionToken, int amount, String strategy,
+  Future<SendResponse> send(String sessionToken, int amount, String strategy,
       String address, String message, bool grinJoin) async {
     try {
-      JsonRpc.Client().sendRequest(method)
+      Map<String, dynamic> reqJson = {
+        'session_token': sessionToken,
+        'amount': amount,
+        'fee_base': 1000000,
+        'selection_strategy': {
+          'strategy': strategy,
+        },
+      };
+
+      if (address != null && address.isNotEmpty) {
+        reqJson.addAll({'address': address});
+      }
+
+      if (message != null && message.isNotEmpty) {
+        reqJson.addAll({'message': message});
+      }
+
+      var postJson;
+      if (grinJoin) {
+        postJson = {
+          'method': 'JOIN',
+          'grinjoin_address': DotEnv().env['GRINJOIN_ADDRESS'],
+        };
+      } else {
+        postJson = {
+          'method': 'STEM',
+        };
+      }
+      reqJson.addAll(postJson);
+
+      return SendResponse.fromJson(
+        await _rpcClient.call('send', reqJson),
+      );
     } catch (error) {
       print('Exception occured: $error');
+      return null;
     }
   }
 }

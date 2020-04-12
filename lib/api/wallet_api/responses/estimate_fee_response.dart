@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/models/commitment.dart';
+import 'package:grin_plus_plus/models/input_output.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'estimate_fee_response.g.dart';
@@ -9,7 +9,7 @@ class EstimateFeeResponse extends Equatable {
   @JsonKey(name: 'fee')
   final int fee;
   @JsonKey(name: 'inputs')
-  final List<Commitment> inputs;
+  final List<InputOutput> inputs;
   @JsonKey(ignore: true)
   final String errorMessage;
 

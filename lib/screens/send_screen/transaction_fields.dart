@@ -28,7 +28,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
     _addressController = TextEditingController();
     _amountController.addListener(() {
       if (_amountController.text != null && _amountController.text.isNotEmpty)
-      _bloc.add(AmountChanged(double.tryParse(_amountController.text)));
+      _bloc.add(AmountChanged(double.tryParse(_amountController.text.replaceAll(',', '.'))));
     });
   }
 
@@ -98,9 +98,10 @@ class _TransactionFieldsState extends State<TransactionFields> {
             child: IconButton(
               padding: const EdgeInsets.all(24),
               onPressed: () => _bloc.add(Send(
-                amount: double.tryParse(_amountController.text),
+                amount: double.tryParse(_amountController.text.replaceAll(',', '.')),
+                //TODO: add grinjoin
                 grinJoin: false,
-                address: _getAddressFromController(),
+                address: _addressController.text,
                 message: _messageController.text,
               )),
               tooltip: kSendString,
@@ -114,15 +115,5 @@ class _TransactionFieldsState extends State<TransactionFields> {
         ),
       ],
     );
-  }
-
-  String _getAddressFromController() {
-
-  }
-
-  @override
-  void dispose() {
-    _bloc.close();
-    super.dispose();
   }
 }

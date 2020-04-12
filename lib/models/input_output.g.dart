@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'commitment.dart';
+part of 'input_output.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Commitment _$CommitmentFromJson(Map<String, dynamic> json) {
-  return Commitment(
+InputOutput _$InputOutputFromJson(Map<String, dynamic> json) {
+  return InputOutput(
     amount: json['amount'] as int,
     blockHeight: json['block_height'] as int,
     keychainPath: json['keychain_path'] as String,
@@ -19,7 +19,7 @@ Commitment _$CommitmentFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CommitmentToJson(Commitment instance) =>
+Map<String, dynamic> _$InputOutputToJson(InputOutput instance) =>
     <String, dynamic>{
       'amount': instance.amount,
       'block_height': instance.blockHeight,

@@ -11,7 +11,7 @@ EstimateFeeResponse _$EstimateFeeResponseFromJson(Map<String, dynamic> json) {
     fee: json['fee'] as int,
     inputs: (json['inputs'] as List)
         ?.map((e) =>
-            e == null ? null : Commitment.fromJson(e as Map<String, dynamic>))
+            e == null ? null : InputOutput.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

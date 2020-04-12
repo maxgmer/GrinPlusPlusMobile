@@ -45,5 +45,9 @@
     <string>Grin++ needs "write" access to storage to save transaction files.</string>
     <key>NSPhotoLibraryUsageDescription</key>
     <string>Grin++ needs "read" access to storage to read transaction files.</string>
+    <key>LSSupportsOpeningDocumentsInPlace</key>
+    <true/>
+    <key>UIFileSharingEnabled</key>
+    <true/>
 </dict>
 </plist>

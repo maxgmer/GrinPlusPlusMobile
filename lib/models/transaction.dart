@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:equatable/equatable.dart';
-import 'package:grin_plus_plus/models/commitment.dart';
+import 'package:grin_plus_plus/models/input_output.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'transaction.g.dart';
@@ -23,7 +23,7 @@ class Transaction extends Equatable implements Comparable<Transaction> {
   final int fee;
   final int id;
   final String type;
-  final List<Commitment> outputs;
+  final List<InputOutput> outputs;
 
   Transaction({
     this.amountCredited,
