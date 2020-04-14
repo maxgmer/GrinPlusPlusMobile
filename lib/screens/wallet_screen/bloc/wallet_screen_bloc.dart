@@ -36,6 +36,30 @@ class WalletScreenBloc extends Bloc<WalletScreenEvent, WalletScreenState> {
       rootBloc.add(ChangeScreen(Screen.walletChoiceScreen));
       yield initialState;
     }
+    if (event is ShowTxDetails) {
+      Session session = SessionRepository.currentSession;
+      Transaction selectedTx = await repository.getTransactionInfo(
+        session.sessionToken,
+        event.transaction.id,
+      );
+      yield state.copyWith(selectedTransaction: selectedTx);
+    }
+    if (event is CancelTransaction) {
+      Session session = SessionRepository.currentSession;
+      bool success = await repository.cancelTransaction(
+        session.sessionToken,
+        event.transaction.id,
+      );
+      if (success) {
+        this.add(RefreshWallet());
+      } else {
+        NotificationsRepository.showNotification(Notification(
+          title: kErrorString,
+          message: kCouldNotCancelTxString,
+          notificationType: NotificationType.failure,
+        ));
+      }
+    }
     if (event is RefreshWallet) {
       if (state.refreshing) return;
 

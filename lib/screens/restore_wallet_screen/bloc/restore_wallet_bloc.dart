@@ -8,8 +8,8 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/wallet_choice_bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/wallet_choice_bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class RestoreWalletBloc extends Bloc<RestoreWalletEvent, RestoreWalletState> {

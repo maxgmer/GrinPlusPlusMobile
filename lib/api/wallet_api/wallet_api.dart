@@ -8,6 +8,7 @@ import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/send_response.dart';
 import 'package:grin_plus_plus/models/input_output.dart';
+import 'package:grin_plus_plus/models/transaction.dart';
 import 'package:grin_plus_plus/models/wallet_info.dart';
 
 class WalletApi {
@@ -187,6 +188,47 @@ class WalletApi {
       print('Exception occured: $error');
     }
     return null;
+  }
+
+  Future<Transaction> getTransactionInfo(String sessionToken, int txId) async {
+    try {
+      var response = await _dio.get(
+        '/wallet/owner/retrieve_txs',
+        queryParameters: {'id': txId},
+        options: Options(
+          headers: {
+            'session_token': sessionToken,
+          },
+        ),
+      );
+
+      if (response.statusCode == 200) {
+        return Transaction.fromJson(response.data['transactions'][0]);
+      }
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return null;
+  }
+
+  Future cancelTransaction(String sessionToken, int txId) async {
+    try {
+      var response = await _dio.post(
+        '/wallet/owner/cancel_tx',
+        queryParameters: {'id': txId},
+        options: Options(
+          headers: {
+            'session_token': sessionToken,
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return false;
   }
 
   Future<EstimateFeeResponse> estimateFee(String sessionToken, int amount, String strategy, List<InputOutput> inputs) async {

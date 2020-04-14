@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/wallets_list_widget.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/welcome_screen_widget.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/wallets_list_widget.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/welcome_screen_widget.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class WalletChoiceScreen extends StatefulWidget {

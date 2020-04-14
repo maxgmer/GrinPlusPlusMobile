@@ -6,7 +6,7 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
 import 'dart:math' as math;
 
 import 'package:grin_plus_plus/strings.dart';

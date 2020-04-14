@@ -89,30 +89,38 @@ class _TransactionFieldsState extends State<TransactionFields> {
               }
             ),
           ),
-          Tooltip(
-            showDuration: Duration(seconds: 5),
-            waitDuration: Duration(milliseconds: 1),
-            message: kGrinJoinInfoString,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Checkbox(
-                  value: state.grinJoin,
-                  onChanged: (grinJoin) => _bloc.add(GrinJoin(grinJoin)),
-                  activeColor: kColorAlmostWhite,
-                  checkColor: Colors.black,
-                  materialTapTargetSize: MaterialTapTargetSize.padded,
-                ),
-                Text(
-                  kGrinJoinString,
-                  style: TextStyle(
-                    color: kColorAlmostWhite,
-                    fontWeight: FontWeight.w300,
-                    fontSize: 16,
+          Builder(
+            builder: (context) {
+              if (state.transportType == TransportType.http ||
+                  state.transportType == TransportType.tor) {
+                return Tooltip(
+                  showDuration: Duration(seconds: 5),
+                  waitDuration: Duration(milliseconds: 1),
+                  message: kGrinJoinInfoString,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Checkbox(
+                        value: state.grinJoin,
+                        onChanged: (grinJoin) => _bloc.add(GrinJoin(grinJoin)),
+                        activeColor: kColorAlmostWhite,
+                        checkColor: Colors.black,
+                        materialTapTargetSize: MaterialTapTargetSize.padded,
+                      ),
+                      Text(
+                        kGrinJoinString,
+                        style: TextStyle(
+                          color: kColorAlmostWhite,
+                          fontWeight: FontWeight.w300,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                );
+              }
+              return Container();
+            }
           ),
           Center(
             child: Padding(

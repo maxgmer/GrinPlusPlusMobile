@@ -17,12 +17,10 @@ class SendScreen extends StatefulWidget {
 
 class _SendScreenState extends State<SendScreen> {
   RootBloc _rootBloc;
-  SendScreenBloc _bloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = BlocProvider.of<SendScreenBloc>(context);
     _rootBloc = BlocProvider.of<RootBloc>(context);
   }
 
@@ -31,7 +29,7 @@ class _SendScreenState extends State<SendScreen> {
     return BlocBuilder<SendScreenBloc, SendScreenState>(
       builder: (context, state) {
         if (state.transactionFilePath != null) {
-          return TransactionFileSavedScreen(_bloc, state.transactionFilePath);
+          return TransactionFileSavedScreen(state.transactionFilePath);
         }
         return Scaffold(
           body: SingleChildScrollView(

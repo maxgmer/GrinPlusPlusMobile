@@ -7,10 +7,9 @@ import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class TransactionFileSavedScreen extends StatelessWidget {
-  final SendScreenBloc bloc;
   final String txFilePath;
 
-  TransactionFileSavedScreen(this.bloc, this.txFilePath);
+  TransactionFileSavedScreen(this.txFilePath);
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +32,7 @@ class TransactionFileSavedScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           BlocProvider.of<WalletScreenBloc>(context).add(RefreshWallet());
-          bloc.add(AcknowledgeTxFilePath());
+          BlocProvider.of<SendScreenBloc>(context).add(AcknowledgeTxFilePath());
         },
         child: Icon(
           Icons.done,

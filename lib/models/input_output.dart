@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -28,6 +30,9 @@ class InputOutput extends Equatable {
     this.label,
     this.mmrIndex,
   });
+
+
+  double get amountDouble => amount / pow(10, 9);
 
   InputOutputStatus get statusEnum {
     switch (status) {

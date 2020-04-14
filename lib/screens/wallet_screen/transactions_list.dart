@@ -6,13 +6,20 @@ import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/models/transaction.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/utils/date_utils.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class TransactionsList extends StatefulWidget {
+  final WalletScreenBloc bloc;
+  final PanelController panelController;
+
+  TransactionsList(this.bloc, this.panelController);
+
   @override
   State<StatefulWidget> createState() => _TransactionsListState();
 }
 
 class _TransactionsListState extends State<TransactionsList> {
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<WalletScreenBloc, WalletScreenState>(
@@ -27,16 +34,22 @@ class _TransactionsListState extends State<TransactionsList> {
             child: ListView.builder(
               itemCount: state.transactions.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 14),
-                  child: TransactionTile(state.transactions[(state.transactions.length - 1) - index]),
+                return InkWell(
+                  onTap: () {
+                    widget.panelController.open();
+                    widget.bloc.add(ShowTxDetails(state.transactions[(state.transactions.length - 1) - index]));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+                    child: TransactionTile(state.transactions[(state.transactions.length - 1) - index]),
+                  ),
                 );
               },
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+              padding: const EdgeInsets.symmetric(vertical: 16),
             ),
           ),
         );
-      }
+      },
     );
   }
 }

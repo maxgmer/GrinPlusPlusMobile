@@ -4,6 +4,7 @@ import 'package:grin_plus_plus/models/transaction.dart';
 class WalletScreenState extends Equatable {
   final bool refreshing;
   final List<Transaction> transactions;
+  final Transaction selectedTransaction;
   final double total;
   final double immature;
   final double unconfirmed;
@@ -13,6 +14,7 @@ class WalletScreenState extends Equatable {
   WalletScreenState({
     this.refreshing = false,
     this.transactions,
+    this.selectedTransaction,
     this.total,
     this.immature,
     this.unconfirmed,
@@ -24,6 +26,7 @@ class WalletScreenState extends Equatable {
     return WalletScreenState(
       refreshing: false,
       transactions: [],
+      selectedTransaction: null,
       total: 0,
       immature: 0,
       unconfirmed: 0,
@@ -33,10 +36,12 @@ class WalletScreenState extends Equatable {
   }
 
   WalletScreenState copyWith({bool refreshing, List<Transaction> transactions,
-    double total, double immature, double unconfirmed, double locked, double spendable}) {
+    double total, double immature, double unconfirmed, double locked, double spendable,
+    Transaction selectedTransaction}) {
     return WalletScreenState(
       refreshing: refreshing ?? this.refreshing,
       transactions: transactions ?? this.transactions,
+      selectedTransaction: selectedTransaction ?? this.selectedTransaction,
       total: total ?? this.total,
       immature: immature ?? this.immature,
       unconfirmed: unconfirmed ?? this.unconfirmed,
@@ -49,6 +54,7 @@ class WalletScreenState extends Equatable {
   List<Object> get props => [
     refreshing,
     transactions,
+    selectedTransaction,
     total,
     immature,
     unconfirmed,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/text_field.dart';
 
