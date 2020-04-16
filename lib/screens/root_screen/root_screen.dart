@@ -10,6 +10,8 @@ import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/create_wallet_screen.dart';
 import 'package:grin_plus_plus/screens/login_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/login_screen/login_screen.dart';
+import 'package:grin_plus_plus/screens/receive_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/receive_screen/receive_screen.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_screen.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
@@ -63,7 +65,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 ),
               ),
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Container(color: Colors.transparent),
               ),
             ],
@@ -104,6 +106,12 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   repository: WalletApi(),
                 ),
               ),
+              BlocProvider<ReceiveScreenBloc>(
+                create: (context) => ReceiveScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
+              ),
               BlocProvider<SeedScreenBloc>(
                 create: (context) => SeedScreenBloc(
                   rootBloc: _mainBloc,
@@ -126,6 +134,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   case Screen.showSeedScreen: return SeedScreen(state.screenData[Screen.showSeedScreen]);
                   case Screen.walletScreen: return WalletScreen();
                   case Screen.sendScreen: return SendScreen();
+                  case Screen.receiveScreen: return ReceiveScreen();
                   case Screen.loginScreen: return LoginScreen(state.screenData[Screen.loginScreen]);
                 }
                 throw UnimplementedError(kScreenNotImplementedString);

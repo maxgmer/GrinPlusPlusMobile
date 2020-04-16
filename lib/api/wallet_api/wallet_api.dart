@@ -6,7 +6,7 @@ import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.d
 import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
-import 'package:grin_plus_plus/api/wallet_api/responses/send_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/transfer_response.dart';
 import 'package:grin_plus_plus/models/input_output.dart';
 import 'package:grin_plus_plus/models/transaction.dart';
 import 'package:grin_plus_plus/models/wallet_info.dart';
@@ -14,10 +14,18 @@ import 'package:grin_plus_plus/models/wallet_info.dart';
 class WalletApi {
   final Dio _dio = NetworkUtilProvider.getDio();
   final RpcClient _rpcClient = NetworkUtilProvider.getRpc();
+  static WalletApi _api;
 
-  WalletApi() {
+  WalletApi._internal() {
     NetworkUtilProvider.uriPathsToSkipErrorNotifications
         .add('/wallet/owner/estimate_fee');
+  }
+
+  factory WalletApi() {
+    if (_api == null) {
+      _api = WalletApi._internal();
+    }
+    return _api;
   }
 
   Future<CreateWalletResponse> createWallet(String username, String password) async {
@@ -261,7 +269,7 @@ class WalletApi {
     return null;
   }
 
-  Future<SendResponse> send(String sessionToken, int amount, String strategy,
+  Future<TransferResponse> send(String sessionToken, int amount, String strategy,
       String address, String message, bool grinJoin) async {
     try {
       Map<String, dynamic> reqJson = {
@@ -294,12 +302,37 @@ class WalletApi {
       }
       reqJson.addAll(postJson);
 
-      return SendResponse.fromJson(
+      return TransferResponse.fromJson(
         await _rpcClient.call('send', reqJson),
       );
     } catch (error) {
       print('Exception occured: $error');
       return null;
     }
+  }
+
+  Future<TransferResponse> receive(String sessionToken,
+      Map<String, dynamic> slate, String address, String message) async {
+    try {
+      Map<String, dynamic> reqJson = {
+        'session_token': sessionToken,
+        'slate': slate,
+      };
+
+      if (address != null && address.isNotEmpty) {
+        reqJson.addAll({'address': address});
+      }
+
+      if (message != null && message.isNotEmpty) {
+        reqJson.addAll({'message': message});
+      }
+
+      return TransferResponse.fromJson(
+        await _rpcClient.call('receive', reqJson),
+      );
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return null;
   }
 }

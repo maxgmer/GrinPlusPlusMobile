@@ -8,12 +8,12 @@ import 'package:grin_plus_plus/screens/send_screen/transport_type.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/text_field.dart';
 
-class TransactionFields extends StatefulWidget {
+class SendTransactionFields extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _TransactionFieldsState();
+  State<StatefulWidget> createState() => _SendTransactionFieldsState();
 }
 
-class _TransactionFieldsState extends State<TransactionFields> {
+class _SendTransactionFieldsState extends State<SendTransactionFields> {
   SendScreenBloc _bloc;
   TextEditingController _amountController;
   TextEditingController _messageController;
@@ -120,7 +120,7 @@ class _TransactionFieldsState extends State<TransactionFields> {
                 );
               }
               return Container();
-            }
+            },
           ),
           Center(
             child: Padding(

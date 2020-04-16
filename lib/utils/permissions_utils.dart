@@ -1,6 +1,6 @@
 import 'package:permission_handler/permission_handler.dart';
 
-class PermissionsUtils {
+class PermissionUtils {
   static Future<PermissionStatus> requestStoragePermission() async {
     return await Permission.storage.request();
   }

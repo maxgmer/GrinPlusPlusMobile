@@ -46,7 +46,8 @@ class WalletScreenFab extends StatelessWidget {
           subtitle: kReceiveDescriptionString,
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
-          onTap: () {},
+          onTap: () => BlocProvider.of<RootBloc>(context)
+            ..add(ChangeScreen(Screen.receiveScreen)),
         ),
         MenuItem(
           child: Icon(Icons.send, color: kColorAlmostWhite),

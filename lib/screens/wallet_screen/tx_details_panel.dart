@@ -541,8 +541,8 @@ class TxOutputDetails extends StatelessWidget {
                 ),
                 SvgPicture.asset(
                   'assets/images/grin-logo-eyes.svg',
-                  width: 24,
-                  height: 24,
+                  width: 20,
+                  height: 20,
                   color: kColorAlmostWhite,
                 ),
               ],

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
-import 'package:grin_plus_plus/api/wallet_api/responses/send_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/transfer_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/models/selection_strategy.dart';
 import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
@@ -43,7 +43,7 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
     if (event is Send) {
       Session session = SessionRepository.currentSession;
       if (state.transportType == TransportType.file) {
-        PermissionStatus status = await PermissionsUtils.requestStoragePermission();
+        PermissionStatus status = await PermissionUtils.requestStoragePermission();
         if (status == PermissionStatus.granted) {
           SendScreenState state = await _sendViaFile(session, event);
           yield state;
@@ -96,7 +96,7 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
   }
 
   Future<SendScreenState> _sendViaFile(Session session, Send event) async {
-    SendResponse response = await repository.send(
+    TransferResponse response = await repository.send(
       session.sessionToken,
       (event.amount * pow(10, 9)).round(),
       SelectionStrategy.smallest,

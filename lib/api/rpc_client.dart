@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:grin_plus_plus/repositories/pending_notifications_repository.dart';
+import 'package:grin_plus_plus/strings.dart';
 
 class RpcClient {
   Dio _dio;
@@ -25,7 +27,15 @@ class RpcClient {
         'params': params,
         'id': params.hashCode,
       };
+
       var response = await _dio.post('/', data: body);
+      if (response.data['error'] != null) {
+        NotificationsRepository.showNotification(Notification(
+          title: kErrorString,
+          message: response.data['error']['message'],
+          notificationType: NotificationType.failure,
+        ));
+      }
       return response.data['result'];
     } catch (error) {
       print('Exception occured: $error');

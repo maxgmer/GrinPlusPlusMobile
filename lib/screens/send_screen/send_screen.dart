@@ -29,7 +29,7 @@ class _SendScreenState extends State<SendScreen> {
     return BlocBuilder<SendScreenBloc, SendScreenState>(
       builder: (context, state) {
         if (state.transactionFilePath != null) {
-          return TransactionFileSavedScreen(state.transactionFilePath);
+          return SendTxFileSavedScreen(state.transactionFilePath);
         }
         return Scaffold(
           body: SingleChildScrollView(
@@ -46,7 +46,7 @@ class _SendScreenState extends State<SendScreen> {
                 Column(
                   children: <Widget>[
                     TransportChoiceButtons(),
-                    TransactionFields(),
+                    SendTransactionFields(),
                   ],
                 ),
               ],

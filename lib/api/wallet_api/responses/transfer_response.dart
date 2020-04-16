@@ -1,14 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'send_response.g.dart';
+part 'transfer_response.g.dart';
 
 @JsonSerializable()
-class SendResponse extends Equatable {
+class TransferResponse extends Equatable {
   final String status;
   final Map<String, dynamic> slate;
 
-  SendResponse({
+  TransferResponse({
     this.status,
     this.slate,
   });
@@ -16,8 +16,8 @@ class SendResponse extends Equatable {
   @override
   List<Object> get props => [status, slate];
 
-  factory SendResponse.fromJson(Map<String, dynamic> json) =>
-      _$SendResponseFromJson(json);
+  factory TransferResponse.fromJson(Map<String, dynamic> json) =>
+      _$TransferResponseFromJson(json);
 
-  Map<String, dynamic> toJson() => _$SendResponseToJson(this);
+  Map<String, dynamic> toJson() => _$TransferResponseToJson(this);
 }
