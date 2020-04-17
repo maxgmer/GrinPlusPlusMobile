@@ -8,6 +8,8 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/repositories/session_repository.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/create_wallet_screen.dart';
+import 'package:grin_plus_plus/screens/finalize_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/finalize_screen/finalize_screen.dart';
 import 'package:grin_plus_plus/screens/login_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/login_screen/login_screen.dart';
 import 'package:grin_plus_plus/screens/receive_screen/bloc/bloc.dart';
@@ -112,6 +114,12 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   repository: WalletApi(),
                 ),
               ),
+              BlocProvider<FinalizeScreenBloc>(
+                create: (context) => FinalizeScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
+              ),
               BlocProvider<SeedScreenBloc>(
                 create: (context) => SeedScreenBloc(
                   rootBloc: _mainBloc,
@@ -135,6 +143,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   case Screen.walletScreen: return WalletScreen();
                   case Screen.sendScreen: return SendScreen();
                   case Screen.receiveScreen: return ReceiveScreen();
+                  case Screen.finalizeScreen: return FinalizeScreen();
                   case Screen.loginScreen: return LoginScreen(state.screenData[Screen.loginScreen]);
                 }
                 throw UnimplementedError(kScreenNotImplementedString);

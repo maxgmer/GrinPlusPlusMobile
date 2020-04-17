@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
-import 'package:grin_plus_plus/screens/receive_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/finalize_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
-class ReceiveTxFileSavedScreen extends StatelessWidget {
+class FinalizedTxFileSavedScreen extends StatelessWidget {
   final String txFilePath;
 
-  ReceiveTxFileSavedScreen(this.txFilePath);
+  FinalizedTxFileSavedScreen(this.txFilePath);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class ReceiveTxFileSavedScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '$kTxFileResponseSavedToString $txFilePath',
+                '$kTxFinalizedFileSavedToString $txFilePath',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -32,7 +32,7 @@ class ReceiveTxFileSavedScreen extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(
-                  kNowSendFileToSenderString,
+                  kFinalizedFileHintString,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 17,
@@ -49,7 +49,7 @@ class ReceiveTxFileSavedScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           BlocProvider.of<WalletScreenBloc>(context).add(RefreshWallet());
-          BlocProvider.of<ReceiveScreenBloc>(context).add(AcknowledgeTxFilePath());
+          BlocProvider.of<FinalizeScreenBloc>(context).add(AcknowledgeTxFilePath());
         },
         child: Icon(
           Icons.done,

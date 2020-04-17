@@ -300,7 +300,7 @@ class WalletApi {
           'method': 'STEM',
         };
       }
-      reqJson.addAll(postJson);
+      reqJson.addAll({'post_tx': postJson});
 
       return TransferResponse.fromJson(
         await _rpcClient.call('send', reqJson),
@@ -329,6 +329,36 @@ class WalletApi {
 
       return TransferResponse.fromJson(
         await _rpcClient.call('receive', reqJson),
+      );
+    } catch (error) {
+      print('Exception occured: $error');
+    }
+    return null;
+  }
+
+  Future<TransferResponse> finalize(String sessionToken,
+      Map<String, dynamic> slate, bool grinJoin) async {
+    try {
+      Map<String, dynamic> reqJson = {
+        'session_token': sessionToken,
+        'slate': slate,
+      };
+
+      var postJson;
+      if (grinJoin) {
+        postJson = {
+          'method': 'JOIN',
+          'grinjoin_address': DotEnv().env['GRINJOIN_ADDRESS'],
+        };
+      } else {
+        postJson = {
+          'method': 'STEM',
+        };
+      }
+      reqJson.addAll({'post_tx': postJson});
+
+      return TransferResponse.fromJson(
+        await _rpcClient.call('finalize', reqJson),
       );
     } catch (error) {
       print('Exception occured: $error');

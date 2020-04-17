@@ -21,7 +21,7 @@ class SendTxFileSavedScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Text(
-                '$kTxFileSavedToString $txFilePath.',
+                '$kTxFileSavedToString $txFilePath',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,

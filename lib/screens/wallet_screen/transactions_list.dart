@@ -91,7 +91,7 @@ class TransactionTile extends StatelessWidget {
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w400,
-            color: transaction.amountCredited < transaction.amountCredited
+            color: transaction.amountCredited < transaction.amountDebited
                 ? kColorPinkRed
                 : kColorGreen,
           ),
@@ -100,7 +100,7 @@ class TransactionTile extends StatelessWidget {
           'assets/images/grin-logo-eyes.svg',
           width: 27,
           height: 27,
-          color: transaction.amountCredited < transaction.amountCredited
+          color: transaction.amountCredited < transaction.amountDebited
               ? kColorPinkRed
               : kColorGreen,
         ),
