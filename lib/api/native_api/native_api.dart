@@ -4,7 +4,7 @@ import 'dart:io';
 
 class NativeApi {
   static final DynamicLibrary nativeAddLib = Platform.isAndroid
-      ? DynamicLibrary.open('libnative_add.so')
+      ? DynamicLibrary.open('libnative.so')
       : DynamicLibrary.process();
 
   static final int Function() incrementAndLoadCounter = nativeAddLib

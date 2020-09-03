@@ -51,3 +51,11 @@ class AmountChanged extends SendScreenEvent {
   @override
   List<Object> get props => [amount];
 }
+class AddressChanged extends SendScreenEvent {
+  final String address;
+
+  AddressChanged(this.address);
+
+  @override
+  List<Object> get props => [address];
+}

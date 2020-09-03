@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/send_screen/transport_type.dart';
+import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/widgets/text_field.dart';
 
@@ -18,6 +19,7 @@ class _SendTransactionFieldsState extends State<SendTransactionFields> {
   TextEditingController _amountController;
   TextEditingController _messageController;
   TextEditingController _addressController;
+  bool _sendingInProgressCacheValue = false;
 
   @override
   void initState() {
@@ -28,13 +30,24 @@ class _SendTransactionFieldsState extends State<SendTransactionFields> {
     _addressController = TextEditingController();
     _amountController.addListener(() {
       if (_amountController.text != null && _amountController.text.isNotEmpty)
-      _bloc.add(AmountChanged(double.tryParse(_amountController.text.replaceAll(',', '.'))));
+        _bloc.add(AmountChanged(double.tryParse(_amountController.text.replaceAll(',', '.'))));
+    });
+    _addressController.addListener(() {
+      if (_addressController.text != null && _addressController.text.isNotEmpty)
+        _bloc.add(AddressChanged(_addressController.text));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SendScreenBloc, SendScreenState>(
+    return BlocConsumer<SendScreenBloc, SendScreenState>(
+      listener: (context, state) {
+        if (_sendingInProgressCacheValue && !state.sendingInProgress) {
+          BlocProvider.of<WalletScreenBloc>(context).add(RefreshWallet());
+        }
+        _sendingInProgressCacheValue = state.sendingInProgress;
+        _bloc.add(AddressChanged(_addressController.text));
+      },
       builder: (context, state) => Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -83,7 +96,15 @@ class _SendTransactionFieldsState extends State<SendTransactionFields> {
                   label = kAddressString;
                 }
                 return BorderedTextField(
-                  labelText: label,
+                  boxColor: state.addressError== null || state.addressError.isEmpty
+                      ? kColorAlmostWhite
+                      : kColorErrorRed,
+                  labelColor: state.addressError == null || state.addressError.isEmpty
+                      ? kColorAlmostWhite
+                      : kColorErrorRed,
+                  labelText: state.addressError == null || state.addressError.isEmpty
+                      ? label
+                      : state.addressError,
                   controller: _addressController,
                 );
               }

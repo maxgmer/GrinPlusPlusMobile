@@ -4,6 +4,7 @@ import 'package:grin_plus_plus/api/dio_provider.dart';
 import 'package:grin_plus_plus/api/rpc_client.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/create_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/foreign_receive_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/login_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/restore_wallet_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/transfer_response.dart';
@@ -362,6 +363,31 @@ class WalletApi {
       );
     } catch (error) {
       print('Exception occured: $error');
+    }
+    return null;
+  }
+
+  Future<ForeignReceiveResponse> foreignReceive(String httpAddress,
+      Map<String, dynamic> slate) async {
+    try {
+      Map<String, dynamic> response = await _rpcClient.call(
+        'receive_tx',
+        [slate, null, ''],
+        customUrl: httpAddress,
+        path: '/v2/foreign',
+      );
+      if (response.containsKey('Ok')) {
+        return ForeignReceiveResponse(
+          isSuccess: true,
+          slate: response['Ok'],
+        );
+      }
+    } catch (error) {
+      print('Exception occured: $error');
+      return ForeignReceiveResponse(
+        isSuccess: false,
+        error: error.toString(),
+      );
     }
     return null;
   }

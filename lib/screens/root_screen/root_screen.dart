@@ -42,6 +42,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
     _mainBloc = BlocProvider.of<RootBloc>(context);
+    _mainBloc.add(InitApp());
     Notifications.NotificationsRepository.subscribe((Notifications.Notification notification) {
       return _showNotification(context, notification);
     });

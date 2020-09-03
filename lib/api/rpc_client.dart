@@ -19,7 +19,8 @@ class RpcClient {
     ));
   }
 
-  Future call(String method, Map<String, dynamic> params) async {
+  Future call(String method, dynamic params,
+      {String customUrl, String path = ''}) async {
     try {
       var body =  {
         'jsonrpc': '2.0',
@@ -27,8 +28,18 @@ class RpcClient {
         'params': params,
         'id': params.hashCode,
       };
-
-      var response = await _dio.post('/', data: body);
+      if (path.isNotEmpty && path.startsWith('/')) {
+        path.replaceFirst('/', '');
+      }
+      var response;
+      if (customUrl == null) {
+        response = await _dio.post('/$path', data: body);
+      } else {
+        response = await _dio.postUri(
+          Uri.parse(customUrl + path),
+          data: body,
+        );
+      }
       if (response.data['error'] != null) {
         NotificationsRepository.showNotification(Notification(
           title: kErrorString,

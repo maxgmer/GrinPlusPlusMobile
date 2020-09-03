@@ -54,8 +54,16 @@ class _SendScreenState extends State<SendScreen> {
           ),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           floatingActionButton: FloatingActionButton(
-            onPressed: () => _rootBloc.add(ChangeScreen(Screen.walletScreen)),
-            child: Icon(
+            onPressed: () {
+              if (!state.sendingInProgress) {
+                _rootBloc.add(ChangeScreen(Screen.walletScreen));
+              }
+            },
+            child: state.sendingInProgress ? CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+              backgroundColor: Colors.transparent,
+              strokeWidth: 2,
+            ) : Icon(
               Icons.arrow_back,
               color: Colors.black,
             ),

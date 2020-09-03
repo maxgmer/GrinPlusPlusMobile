@@ -4,6 +4,7 @@ import 'dart:io';
 import 'dart:math';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/estimate_fee_response.dart';
+import 'package:grin_plus_plus/api/wallet_api/responses/foreign_receive_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/responses/transfer_response.dart';
 import 'package:grin_plus_plus/api/wallet_api/wallet_api.dart';
 import 'package:grin_plus_plus/models/selection_strategy.dart';
@@ -15,6 +16,7 @@ import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/utils/data_utils.dart';
 import 'package:grin_plus_plus/utils/permissions_utils.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:validators/validators.dart';
 import 'bloc.dart';
 
 class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
@@ -55,7 +57,11 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
           ));
         }
       } else if (state.transportType == TransportType.http) {
-
+        if (isURL(event.address, requireTld: false)) {
+          yield state.copyWith(sendingInProgress: true);
+          await _sendViaHttp(session, event);
+          yield state.copyWith(sendingInProgress: false);
+        }
       } else if (state.transportType == TransportType.tor) {
 
       } else {
@@ -64,6 +70,22 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
           message: kTransportNotSupportedString,
           notificationType: NotificationType.failure,
         ));
+      }
+    }
+    if (event is AddressChanged) {
+      if (state.transportType == TransportType.file) {
+        yield state.copyWith(
+          addressError: '',
+        );
+      } else {
+        if (!isURL(event.address, requireTld: false) &&
+            event.address.isNotEmpty) {
+          yield state.copyWith(
+            addressError: kAddressUrlInvalidString,
+          );
+        } else {
+          yield state.copyWith(addressError: '');
+        }
       }
     }
     if (event is AmountChanged) {
@@ -126,6 +148,43 @@ class SendScreenBloc extends Bloc<SendScreenEvent, SendScreenState> {
       ));
     }
     return this.state;
+  }
+
+  Future _sendViaHttp(Session session, Send event) async {
+    TransferResponse response = await repository.send(
+      session.sessionToken,
+      (event.amount * pow(10, 9)).round(),
+      SelectionStrategy.smallest,
+      event.address,
+      event.message,
+      state.grinJoin,
+    );
+    if (response?.status == 'SENT') {
+      ForeignReceiveResponse foreignResponse = await repository.foreignReceive(
+        event.address,
+        response.slate,
+      );
+      if (foreignResponse.isSuccess) {
+        TransferResponse response = await repository.finalize(
+          session.sessionToken,
+          foreignResponse.slate,
+          state.grinJoin,
+        );
+        if (response?.status == 'FINALIZED') {
+          NotificationsRepository.showNotification(Notification(
+            title: kSuccessString,
+            message: kSuccessfullySentString,
+            notificationType: NotificationType.success,
+          ));
+          return;
+        }
+      }
+      NotificationsRepository.showNotification(Notification(
+        title: kErrorString,
+        message: kCouldNotSendFundsString,
+        notificationType: NotificationType.failure,
+      ));
+    }
   }
 
   SendScreenState _writeSlateToFile(File transactionFile, String slate) {

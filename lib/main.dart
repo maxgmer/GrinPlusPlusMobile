@@ -48,10 +48,15 @@ Future loadConfig() async {
     'GRINJOIN_ADDRESS',
     'RPC_OWNER_URL',
     'TRANSACTIONS_FOLDER',
+    'TOR_CONTROL_PORT',
+    'TOR_SOCKS_PORT',
+    'TOR_CONTROL_PASSWORD',
+    'TOR_HASHED_CONTROL_PASSWORD',
   ];
 
   await DotEnv().load('.env');
   if (!DotEnv().isEveryDefined(requiredEnvVariables)) {
+    DotEnv().env = {};
     await DotEnv().load('default.env');
   }
 }

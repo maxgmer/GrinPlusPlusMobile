@@ -35,6 +35,15 @@ class DataUtils {
   }
 
   static Future<Directory> getTransactionsDirectory() async {
+    String rootPath = await getPathWhereAppDirIsPlaced();
+    Directory directory = Directory('$rootPath${DotEnv().env['TRANSACTIONS_FOLDER']}');
+    if (!directory.existsSync()) {
+      directory.createSync(recursive: true);
+    }
+    return directory;
+  }
+
+  static Future<String> getPathWhereAppDirIsPlaced() async {
     Directory directory;
     if (Platform.isAndroid) {
       List<StorageInfo> info = await PathProviderEx.getStorageInfo();
@@ -47,10 +56,6 @@ class DataUtils {
     if (Platform.isIOS) {
       directory = await getApplicationDocumentsDirectory();
     }
-    directory = Directory('${directory.path}${DotEnv().env['TRANSACTIONS_FOLDER']}');
-    if (!directory.existsSync()) {
-      directory.createSync(recursive: true);
-    }
-    return directory;
+    return directory.path;
   }
 }

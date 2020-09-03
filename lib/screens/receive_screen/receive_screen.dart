@@ -1,3 +1,4 @@
+import 'package:clipboard_manager/clipboard_manager.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,111 +61,116 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 24, right: 24, bottom: 80),
-                  child: Builder(
-                    builder: (context) {
-                      if (state.file != null) {
-                        return Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 8),
-                              child: BorderedTextField(
-                                labelText: kMessageString,
-                                controller: _messageController,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 12),
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          '$kSelectedFileString: ',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            color: kColorAlmostWhite,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        Marquee(
-                                          animationDuration: Duration(milliseconds: state.file.path.length * 100),
-                                          backDuration: Duration(milliseconds: state.file.path.length * 100),
-                                          child: Text(
-                                            state.file.path,
-                                            style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.bold,
-                                              color: kColorAlmostWhite,
+                  child: Column(
+                    children: <Widget>[
+                      AddressesWidgetsBlock(_rootBloc),
+                      Builder(
+                        builder: (context) {
+                          if (state.file != null) {
+                            return Column(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 8),
+                                  child: BorderedTextField(
+                                    labelText: kMessageString,
+                                    controller: _messageController,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 12),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Text(
+                                              '$kSelectedFileString: ',
+                                              style: TextStyle(
+                                                fontSize: 18,
+                                                color: kColorAlmostWhite,
+                                                fontWeight: FontWeight.w400,
+                                              ),
                                             ),
-                                          ),
+                                            Marquee(
+                                              animationDuration: Duration(milliseconds: state.file.path.length * 100),
+                                              backDuration: Duration(milliseconds: state.file.path.length * 100),
+                                              child: Text(
+                                                state.file.path,
+                                                style: TextStyle(
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: kColorAlmostWhite,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () => _bloc.add(ClearFileSelection()),
-                                    icon: Icon(
-                                      Icons.clear,
-                                      color: kColorAlmostWhite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 16),
-                              child: Row(
-                                children: <Widget>[
-                                  Spacer(),
-                                  RaisedButton(
-                                    onPressed: () => _bloc.add(Receive()),
-                                    color: kColorAlmostWhite,
-                                    child: Row(
-                                      children: <Widget>[
-                                        Text(
-                                          kReceiveString,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 18,
-                                            color: Colors.black,
-                                          ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () => _bloc.add(ClearFileSelection()),
+                                        icon: Icon(
+                                          Icons.clear,
+                                          color: kColorAlmostWhite,
                                         ),
-                                        Icon(
-                                          Icons.call_received,
-                                          color: Colors.black,
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
-                                  Spacer(),
-                                ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 16),
+                                  child: Row(
+                                    children: <Widget>[
+                                      Spacer(),
+                                      RaisedButton(
+                                        onPressed: () => _bloc.add(Receive()),
+                                        color: kColorAlmostWhite,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Text(
+                                              kReceiveString,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 18,
+                                                color: Colors.black,
+                                              ),
+                                            ),
+                                            Icon(
+                                              Icons.call_received,
+                                              color: Colors.black,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Spacer(),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          } else {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 28),
+                              child: RaisedButton(
+                                onPressed: () {
+                                  _messageController.clear();
+                                  _bloc.add(SelectTxFile());
+                                },
+                                color: kColorAlmostWhite,
+                                child: Text(
+                                  kSelectFileString,
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                  ),
+                                ),
                               ),
-                            ),
-                          ],
-                        );
-                      } else {
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 28),
-                          child: RaisedButton(
-                            onPressed: () {
-                              _messageController.clear();
-                              _bloc.add(SelectTxFile());
-                            },
-                            color: kColorAlmostWhite,
-                            child: Text(
-                              kSelectFileString,
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                    }
+                            );
+                          }
+                        }
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -181,6 +187,98 @@ class _ReceiveScreenState extends State<ReceiveScreen> {
           ),
         );
       },
+    );
+  }
+}
+
+class AddressesWidgetsBlock extends StatelessWidget {
+  final RootBloc rootBloc;
+
+  AddressesWidgetsBlock(this.rootBloc);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Text(
+            kHttpAndTorAddressesString,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              color: kColorAlmostWhite,
+            ),
+          ),
+        )
+        ,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Marquee(
+                child: Text(
+                  rootBloc.state.httpAddress ?? kCouldNotRunTorString,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: kColorAlmostWhite,
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (rootBloc.state.httpAddress == null) {
+                  final snackBar = SnackBar(content: Text(kNothingToCopyString));
+                  Scaffold.of(context).showSnackBar(snackBar);
+                } else {
+                  ClipboardManager.copyToClipBoard(rootBloc.state.httpAddress).then((result) {
+                    final snackBar = SnackBar(content: Text(kCopiedToClipboardString));
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  });
+                }
+              },
+              icon: Icon(Icons.content_copy),
+              color: kColorAlmostWhite,
+              padding: const EdgeInsets.all(0),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Expanded(
+              child: Marquee(
+                child: Text(
+                  rootBloc.state?.torPublicKey ?? kCouldNotRunTorString,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.w400,
+                    color: kColorAlmostWhite,
+                  ),
+                ),
+              ),
+            ),
+            IconButton(
+              onPressed: () {
+                if (rootBloc.state.torPublicKey == null) {
+                  final snackBar = SnackBar(content: Text(kNothingToCopyString));
+                  Scaffold.of(context).showSnackBar(snackBar);
+                } else {
+                  ClipboardManager.copyToClipBoard(rootBloc.state.torPublicKey).then((result) {
+                    final snackBar = SnackBar(content: Text(kCopiedToClipboardString));
+                    Scaffold.of(context).showSnackBar(snackBar);
+                  });
+                }
+              },
+              icon: Icon(Icons.content_copy),
+              color: kColorAlmostWhite,
+              padding: const EdgeInsets.all(0),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
