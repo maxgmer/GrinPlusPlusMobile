@@ -5,5 +5,7 @@ enum Screen {
   showSeedScreen,
   walletScreen,
   sendScreen,
+  receiveScreen,
+  finalizeScreen,
   loginScreen,
 }

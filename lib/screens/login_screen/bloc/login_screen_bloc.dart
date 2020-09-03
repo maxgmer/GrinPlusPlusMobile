@@ -8,6 +8,7 @@ import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
 import 'package:grin_plus_plus/strings.dart';
 import 'package:grin_plus_plus/utils/data_utils.dart';
+import 'package:crypto/crypto.dart';
 import 'bloc.dart';
 
 class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
@@ -36,7 +37,7 @@ class LoginScreenBloc extends Bloc<LoginScreenEvent, LoginScreenState> {
             listenerPort: loginResponse.listenerPort,
           ));
           DataUtils.updateWalletLatestLoginTime(event.walletName);
-          rootBloc.add(ChangeScreen(Screen.sendScreen));
+          rootBloc.add(ChangeScreen(Screen.walletScreen));
           yield initialState;
         }
       } else {

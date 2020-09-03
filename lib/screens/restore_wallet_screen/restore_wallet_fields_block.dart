@@ -6,7 +6,7 @@ import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_fields/name_and_password.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_fields/seed_words.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_fields/seed_words_number_choice.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class RestoreWalletFieldsBlock extends StatefulWidget {

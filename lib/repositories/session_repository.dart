@@ -4,18 +4,19 @@ import 'package:equatable/equatable.dart';
 import 'package:rxdart/rxdart.dart';
 
 class SessionRepository {
-  static BehaviorSubject<Session> _sessionTokenStream = BehaviorSubject<Session>();
+  static BehaviorSubject<Session> _sessionTokenController = BehaviorSubject<Session>();
 
-  Stream<Session> get sessionTokenStream => _sessionTokenStream.stream;
+  static Stream<Session> get sessionStream => _sessionTokenController.stream;
+  static Session get currentSession => _sessionTokenController.value;
 
   static void addSessionToken(Session sessionToken) {
     if (sessionToken != null) {
-      _sessionTokenStream.add(sessionToken);
+      _sessionTokenController.add(sessionToken);
     }
   }
 
   static void dispose() {
-    _sessionTokenStream.close();
+    _sessionTokenController.close();
   }
 }
 

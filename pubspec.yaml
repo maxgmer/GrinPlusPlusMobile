@@ -27,12 +27,23 @@ dependencies:
   json_annotation: ^3.0.0
   simple_animations: ^1.3.6
   grouped_buttons: ^1.0.4
-  flutter_boom_menu: ^1.0.0
+  flutter_boom_menu: ^1.0.2
   achievement_view: ^0.2.0
   rxdart: ^0.23.1
   dio: ^3.0.9
   flutter_dotenv: ^2.1.0
   shared_preferences: ^0.5.6+2
+  permission_handler: ^5.0.0+hotfix.3
+  path_provider: ^1.6.5
+  path_provider_ex: ^1.0.1
+  sliding_up_panel: ^1.0.1
+  clipboard_manager: ^0.0.4
+  marquee_widget: ^0.8.0
+  file_picker: ^1.6.2
+  validators: ^2.0.0+1
+  tweetnacl: ^0.3.1
+  pointycastle: ^1.0.0
+  hex: ^0.1.2
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -59,6 +70,7 @@ flutter:
   assets:
     - assets/images/
     - .env
+    - default.env
 
   fonts:
     - family: Nunito

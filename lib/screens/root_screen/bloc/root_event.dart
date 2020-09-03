@@ -7,8 +7,10 @@ abstract class RootEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
-
+class InitApp extends RootEvent {}
 class AppPaused extends RootEvent {}
+class StartTor extends RootEvent {}
+class StopTor extends RootEvent {}
 class ChangeScreen<T> extends RootEvent {
   final Screen screen;
   final T additionalData;

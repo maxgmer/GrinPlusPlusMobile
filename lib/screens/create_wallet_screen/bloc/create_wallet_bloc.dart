@@ -7,7 +7,7 @@ import 'package:grin_plus_plus/models/wallet.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/wallet_choice_bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/wallet_choice_bloc.dart';
 import 'package:grin_plus_plus/strings.dart';
 
 class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
@@ -37,6 +37,7 @@ class CreateWalletBloc extends Bloc<CreateWalletEvent, CreateWalletState> {
       if (nameError == null && passwordError == null) {
         CreateWalletResponse createWalletResponse = await repository.createWallet(walletName, password);
         if (createWalletResponse != null) {
+          repository.updateWallet(createWalletResponse.sessionToken);
           rootBloc.add(ChangeScreen<String>(
             Screen.showSeedScreen,
             additionalData: createWalletResponse.walletSeed,

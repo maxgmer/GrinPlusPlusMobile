@@ -8,6 +8,33 @@ abstract class SendScreenEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class AcknowledgeTxFilePath extends SendScreenEvent {}
+class GrinJoin extends SendScreenEvent {
+  final bool grinJoinEnabled;
+
+  GrinJoin(this.grinJoinEnabled);
+
+  @override
+  List<Object> get props => [grinJoinEnabled];
+}
+class Send extends SendScreenEvent {
+  final double amount;
+  final String address;
+  final String message;
+
+  Send({
+    this.amount,
+    this.address,
+    this.message,
+  });
+
+  @override
+  List<Object> get props => [
+    amount,
+    address,
+    message,
+  ];
+}
 class ChangeTransportType extends SendScreenEvent {
   final TransportType transportType;
 
@@ -15,4 +42,20 @@ class ChangeTransportType extends SendScreenEvent {
 
   @override
   List<Object> get props => [transportType];
+}
+class AmountChanged extends SendScreenEvent {
+  final double amount;
+
+  AmountChanged(this.amount);
+
+  @override
+  List<Object> get props => [amount];
+}
+class AddressChanged extends SendScreenEvent {
+  final String address;
+
+  AddressChanged(this.address);
+
+  @override
+  List<Object> get props => [address];
 }

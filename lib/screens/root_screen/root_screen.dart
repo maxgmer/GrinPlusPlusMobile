@@ -8,8 +8,12 @@ import 'package:grin_plus_plus/repositories/pending_notifications_repository.dar
 import 'package:grin_plus_plus/repositories/session_repository.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/create_wallet_screen/create_wallet_screen.dart';
+import 'package:grin_plus_plus/screens/finalize_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/finalize_screen/finalize_screen.dart';
 import 'package:grin_plus_plus/screens/login_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/login_screen/login_screen.dart';
+import 'package:grin_plus_plus/screens/receive_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/receive_screen/receive_screen.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/restore_wallet_screen/restore_wallet_screen.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
@@ -18,8 +22,8 @@ import 'package:grin_plus_plus/screens/seed_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/seed_screen/seed_screen.dart';
 import 'package:grin_plus_plus/screens/send_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/send_screen/send_screen.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/bloc/bloc.dart';
-import 'package:grin_plus_plus/screens/wallet_choice/wallet_choice_screen.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/bloc/bloc.dart';
+import 'package:grin_plus_plus/screens/wallet_choice_screen/wallet_choice_screen.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/wallet_screen/wallet_screen.dart';
 import 'package:grin_plus_plus/strings.dart';
@@ -38,6 +42,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
     super.initState();
     _mainBloc = BlocProvider.of<RootBloc>(context);
+    _mainBloc.add(InitApp());
     Notifications.NotificationsRepository.subscribe((Notifications.Notification notification) {
       return _showNotification(context, notification);
     });
@@ -63,7 +68,7 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 ),
               ),
               BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
                 child: Container(color: Colors.transparent),
               ),
             ],
@@ -93,10 +98,28 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                 ),
               ),
               BlocProvider<WalletScreenBloc>(
-                create: (context) => WalletScreenBloc(),
+                create: (context) => WalletScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
               ),
               BlocProvider<SendScreenBloc>(
-                create: (context) => SendScreenBloc(),
+                create: (context) => SendScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
+              ),
+              BlocProvider<ReceiveScreenBloc>(
+                create: (context) => ReceiveScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
+              ),
+              BlocProvider<FinalizeScreenBloc>(
+                create: (context) => FinalizeScreenBloc(
+                  rootBloc: _mainBloc,
+                  repository: WalletApi(),
+                ),
               ),
               BlocProvider<SeedScreenBloc>(
                 create: (context) => SeedScreenBloc(
@@ -118,8 +141,10 @@ class _RootScreenState extends State<RootScreen> with WidgetsBindingObserver {
                   case Screen.createWalletScreen: return CreateWalletScreen();
                   case Screen.restoreWalletScreen: return RestoreWalletScreen();
                   case Screen.showSeedScreen: return SeedScreen(state.screenData[Screen.showSeedScreen]);
-                  case Screen.walletScreen: return WalletScreen(state.screenData[Screen.walletScreen]);
-                  case Screen.sendScreen: return SendScreen(state.screenData[Screen.sendScreen]);
+                  case Screen.walletScreen: return WalletScreen();
+                  case Screen.sendScreen: return SendScreen();
+                  case Screen.receiveScreen: return ReceiveScreen();
+                  case Screen.finalizeScreen: return FinalizeScreen();
                   case Screen.loginScreen: return LoginScreen(state.screenData[Screen.loginScreen]);
                 }
                 throw UnimplementedError(kScreenNotImplementedString);

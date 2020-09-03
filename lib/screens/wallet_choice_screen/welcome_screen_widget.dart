@@ -15,12 +15,12 @@ class WelcomeScreen extends StatelessWidget {
           FadeIn(
             child: Text(
               '$kHelloString!',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 30,
-                  color: kColorAlmostWhite,
-                  fontWeight: FontWeight.w300,
-                )
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 30,
+                color: kColorAlmostWhite,
+                fontWeight: FontWeight.w300,
+              ),
             ),
           ),
           Container(

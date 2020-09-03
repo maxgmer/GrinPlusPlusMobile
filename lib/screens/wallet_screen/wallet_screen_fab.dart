@@ -5,6 +5,7 @@ import 'package:flutter_boom_menu/flutter_boom_menu.dart';
 import 'package:grin_plus_plus/colors.dart';
 import 'package:grin_plus_plus/screens/root_screen/bloc/bloc.dart';
 import 'package:grin_plus_plus/screens/screens.dart';
+import 'package:grin_plus_plus/strings.dart';
 import 'bloc/bloc.dart';
 
 class WalletScreenFab extends StatelessWidget {
@@ -22,36 +23,38 @@ class WalletScreenFab extends StatelessWidget {
       children: [
         MenuItem(
           child: Icon(Icons.exit_to_app, color: kColorAlmostWhite),
-          title: "Logout",
+          title: kLogoutString,
           titleColor: kColorAlmostWhite,
-          subtitle: "Logout from current wallet",
+          subtitle: kLogoutDescriptionString,
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
-          onTap: () {},
+          onTap: () => bloc.add(Logout()),
         ),
         MenuItem(
           child: Icon(Icons.done_all, color: kColorAlmostWhite),
-          title: "Finalize",
+          title: kFinalizeString,
           titleColor: kColorAlmostWhite,
-          subtitle: "Confirm the transaction you sent before",
+          subtitle: kFinalizeDescriptionString,
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
-          onTap: () {},
+          onTap: () => BlocProvider.of<RootBloc>(context)
+            ..add(ChangeScreen(Screen.finalizeScreen)),
         ),
         MenuItem(
           child: Icon(Icons.call_received, color: kColorAlmostWhite),
-          title: "Receive",
+          title: kReceiveString,
           titleColor: kColorAlmostWhite,
-          subtitle: "Receive grin from another person",
+          subtitle: kReceiveDescriptionString,
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
-          onTap: () {},
+          onTap: () => BlocProvider.of<RootBloc>(context)
+            ..add(ChangeScreen(Screen.receiveScreen)),
         ),
         MenuItem(
           child: Icon(Icons.send, color: kColorAlmostWhite),
-          title: "Send",
+          title: kSendString,
           titleColor: kColorAlmostWhite,
-          subtitle: "Send grin to another person",
+          subtitle: kSendDescriptionString,
           subTitleColor: kColorGreyLight,
           backgroundColor: kColorBackgroundGrey,
           onTap: () => BlocProvider.of<RootBloc>(context)
